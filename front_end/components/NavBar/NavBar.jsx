@@ -18,9 +18,9 @@ const NavBar = () => {
       </div>
 
       <div className={`${styles.NavRight}`}>
-        <FriendsButton className={`${styles.NavItem}`}/>
-        <NotificationButton className={`${styles.NavItem}`}/>
-        <ProfilePictureIcon className={`${styles.ProfileNavBar} ${styles.NavItem}`}/>
+        <FriendsButton className={`${styles.NavItem} ${styles.NavItemButton}`}/>
+        <NotificationButton className={`${styles.NavItem} ${styles.NavItemButton}`}/>
+        <ProfilePictureIcon className={`${styles.ProfileNavBar} ${styles.NavItem} ${styles.NavItemButton}`}/>
       </div>
 
     </nav>

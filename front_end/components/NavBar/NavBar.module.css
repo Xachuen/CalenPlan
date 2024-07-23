@@ -9,11 +9,11 @@
 }
 
 .NavLeft {
-
+  /*No style*/
 }
 
 .NavCenter {
-
+  /*No style*/
 }
 
 .NavRight {
@@ -25,7 +25,21 @@
   max-height: 100%;
 }
 
+.NavItemButton {
+  padding: 0.4rem;
+  border-radius: 15px;
+}
 
+.NavItemButton:hover {
+  background-color: #44465c;
+  transition: 0.3s;
+}
+
+.NavItemButton:not(:hover) {
+  transition: 0.2s;
+}
+
+/* Reused Navbar Elements (not tailored to Navbar, can be used elsewhere */
 .ProfileNavBar {
   height: 3rem;
 }
