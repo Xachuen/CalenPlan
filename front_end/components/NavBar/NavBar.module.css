@@ -5,17 +5,31 @@
   padding: 0;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-.NavItem{
+.NavLeft {
+
+}
+
+.NavCenter {
+
+}
+
+.NavRight {
+  display: flex;
+}
+
+.NavItem {
   margin: 1rem;
   max-height: 100%;
 }
 
-.ProfileNavBar{
+
+.ProfileNavBar {
   height: 3rem;
 }
 
-.LogoNavBar{
+.LogoNavBar {
   height: 3rem;
 }

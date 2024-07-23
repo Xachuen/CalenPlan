@@ -3,7 +3,7 @@ import styles from './Logo.module.css';
 
 const Logo = ({ className }) => {
   return ( 
-    <img className={className} src="public\calenplanlogo1.svg"/>
+    <img className={className} src='front_end\src\assets\General\calenplanlogo.svg'/>
    );
 }
  
