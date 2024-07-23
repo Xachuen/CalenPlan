@@ -1,10 +1,9 @@
 import React from 'react';
-
 import styles from './Logo.module.css';
 
-const Logo = () => {
+const Logo = ({ className }) => {
   return ( 
-    <img className={styles.Title} src="public\calenplanlogo1.svg"/>
+    <img className={className} src="public\calenplanlogo1.svg"/>
    );
 }
  
