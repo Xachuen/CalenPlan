@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import StartPage from '../components/StartPage/StartPage'
+import NavBar from '../components/NavBar/NavBar'
 
 /*Components*/
 
@@ -10,6 +11,7 @@ function App() {
 
   return (
     <>
+      <NavBar/>
       <StartPage/>
     </>
   )

@@ -1,3 +1,16 @@
 .StartPage {
-  background-color: yellow;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+
+}
+
+.StartPageGrid {
+  display: grid;
+  gap: 1rem;
+  background-color: rgb(158, 197, 255);
+  width: 50%;
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 7rem 2rem;
 }
