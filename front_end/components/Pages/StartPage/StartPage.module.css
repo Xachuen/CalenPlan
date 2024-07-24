@@ -6,6 +6,10 @@
   background-color: #4e516a;
   width: 50rem;
   border-radius: 10px;
+  margin: 5rem auto;
+  gap: 2rem;
+  padding: 2rem;
+  justify-content: center;
 }
 
 .StartPageParagraph {

@@ -8,7 +8,7 @@ const StartPage = () => {
   return ( 
     <div className={styles.StartPage}>
       <Logo className={styles.LogoStartPage}/>
-      <p className={styles.StartPageParagraph}>Welcome to CalenPlan, to calendar app to plan with you friends!
+      <p className={styles.StartPageParagraph}>Welcome the CalenPlan, to calendar app to plan with you friends!
         Get started by signing in and invite friends to start planning!
       </p>
       <GetStarted/>

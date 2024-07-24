@@ -4,6 +4,7 @@ import Logo from '../Logo/Logo';
 import ProfilePictureIcon from '../ProfilePictureIcon/ProfilePictureIcon';
 import FriendsButton from './subcomponents/FriendsButton/FriendsButton';
 import NotificationButton from './subcomponents/NotificationButton/NotificationButton';
+import CalendarButton from './subcomponents/CalendarButton/CalendarButton';
 
 
 const NavBar = () => {
@@ -20,6 +21,7 @@ const NavBar = () => {
       <div className={`${styles.NavRight}`}>
         <FriendsButton className={`${styles.NavItem} ${styles.NavItemButton}`}/>
         <NotificationButton className={`${styles.NavItem} ${styles.NavItemButton}`}/>
+        <CalendarButton className={`${styles.NavItem} ${styles.NavItemButton}`}/>
         <ProfilePictureIcon className={`${styles.ProfileNavBar} ${styles.NavItem} ${styles.NavItemButton}`}/>
       </div>
 
