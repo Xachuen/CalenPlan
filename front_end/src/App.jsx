@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import StartPage from '../components/StartPage/StartPage'
 import NavBar from '../components/NavBar/NavBar'
+import MainHolder from '../components/MainHolder/MainHolder'
 
 /*Components*/
 
@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <NavBar/>
-      <StartPage/>
+      <MainHolder/>
     </>
   )
 }

@@ -1,0 +1,20 @@
+.StartPage {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 30rem;
+  background-color: #4e516a;
+  width: 50rem;
+  border-radius: 10px;
+}
+
+.StartPageParagraph {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.LogoStartPage {
+  height: 5rem;
+}
