@@ -22,3 +22,25 @@
 .LogoStartPage {
   height: 5rem;
 }
+
+.primaryColor {
+  background-color: rgb(252, 0, 0);
+  color: rgb(255, 0, 0);
+}
+
+.GetStarted {
+  width: 8rem;
+  padding: 1rem;
+  margin: 0 auto;
+  background-color: #2C2F48;
+  color: white;
+  border-radius: 10px;
+  border-style: none;
+  font-size: 1rem;
+}
+
+.GetStarted:hover {
+  background-color:#343753;
+  transition: 0.1s;
+}
+
