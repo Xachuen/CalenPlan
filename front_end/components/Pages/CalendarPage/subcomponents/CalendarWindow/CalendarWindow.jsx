@@ -7,7 +7,8 @@ const CalendarWindow = () => {
     <div className={styles.CenterContainer}>
       <div className={styles.CalendarRoot}>
         <div className={styles.CalendarWindow}>
-          <img className={styles.ArrowButton} src='front_end\src\assets\General\triangle_left.svg'></img>
+          {/* TODO: Wrap these arrows in div. */}
+          <img className={`${styles.ArrowButton} ${styles.LeftArrow}`} src='front_end\src\assets\General\triangle_left.svg'></img>
           <h2 className={`${styles.DayTitle} ${styles.GridItem}`}>Sunday</h2>
           <h2 className={`${styles.DayTitle} ${styles.GridItem}`}>Monday</h2>
           <h2 className={`${styles.DayTitle} ${styles.GridItem}`}>Tuesday</h2>
@@ -15,7 +16,16 @@ const CalendarWindow = () => {
           <h2 className={`${styles.DayTitle} ${styles.GridItem}`}>Thursday</h2>
           <h2 className={`${styles.DayTitle} ${styles.GridItem}`}>Friday</h2>
           <h2 className={`${styles.DayTitle} ${styles.GridItem}`}>Saturday</h2>
-          <img className={styles.ArrowButton} src='front_end\src\assets\General\triangle_right.svg'></img>
+          <img className={`${styles.ArrowButton} ${styles.RightArrow}`} src='front_end\src\assets\General\triangle_right.svg'></img>
+
+          {/* Days */}
+
+          <div className={`${styles.DayItem} ${styles.GridItem}`}>
+
+          </div>
+          <div className={`${styles.DayItem} ${styles.GridItem}`}>
+
+          </div>
         </div>
       </div>
     </div>
