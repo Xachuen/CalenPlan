@@ -5,7 +5,9 @@ import StartPage from '../Pages/StartPage/StartPage';
 
 const MainHolder = () => {
   return ( 
-    <StartPage/>
+    <>
+      <StartPage/>
+    </>
    );
 }
  

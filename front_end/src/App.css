@@ -5,6 +5,10 @@
     font-family: "Inter", sans-serif;
 }
 
+body {
+    background-image: url('front_end/src/assets/General/background.svg');
+}
+
 button {
     font-weight: bold;
 }
