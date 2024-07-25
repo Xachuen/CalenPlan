@@ -9,14 +9,19 @@
 }
 
 .NavLeft {
-  /*No style*/
+  width: 100/3%;
 }
 
 .NavCenter {
-  /*No style*/
+  width: 100/3%;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%)
 }
 
 .NavRight {
+  width: 100/3%;
   display: flex;
 }
 
