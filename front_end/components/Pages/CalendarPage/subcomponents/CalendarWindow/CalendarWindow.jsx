@@ -25,6 +25,7 @@ const CalendarWindow = () => {
             <img className={`${styles.ArrowButton}`} src='front_end\src\assets\General\triangle_right.svg'></img>
           </div>
 
+          <div className={`${styles.SeperatorBar}`}/>
 
           {/* Days */}
           <Days/>

@@ -1,8 +1,9 @@
 :root {
     --row-size: 7.5rem;
     --column-size: 7.5rem;
-    --weekday-title-size: 3rem;
+    --weekday-title-size: 3.3rem;
     --arrow-size: 4rem;
+    --bar-size: 0.2rem;
   }
 
 .CenterContainer {
@@ -12,14 +13,15 @@
 .CalendarRoot {
     background-color: #4e516a;
     border-radius: 15px; /* Desired border radius */
-    padding: 1rem; /* Padding to ensure the grid fits inside with space */
     display: inline-block; /* Adjust as needed */
     margin: 1rem auto;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
 }
 
 .CalendarWindow {
     display: grid;
-    grid-template-rows: var(--weekday-title-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size);
+    grid-template-rows: var(--weekday-title-size) var(--bar-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size);
     grid-template-columns: var(--arrow-size) var(--column-size) var(--column-size) var(--column-size) var(--column-size) var(--column-size) var(--column-size) var(--column-size) var(--arrow-size);
     border-radius: 10px;
     margin: 0;
@@ -35,12 +37,14 @@
     font-size: 1.1rem;
     color: white;
     text-align: center;
+    border-bottom: 2px solid #282a36;
+    padding: 0.5rem;
 }
 
 .LeftArrow {
     height: 100%;
     grid-row-start: 1;
-    grid-row-end: 8;
+    grid-row-end: 9;
     grid-column-start: 1;
     grid-column-end: 2;
 }
@@ -48,7 +52,7 @@
 .RightArrow {
     height: 100%;
     grid-row-start: 1;
-    grid-row-end: 8;
+    grid-row-end: 9;
     grid-column-start: 9;
     grid-column-end: 10;
 }
@@ -69,3 +73,13 @@
 .ArrowButton:not(:hover) {
     transition: 0.2s;
   }
+
+.SeperatorBar {
+    background-color: #282a36;
+    height: 100%;
+    width:  100%;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 10;
+}
