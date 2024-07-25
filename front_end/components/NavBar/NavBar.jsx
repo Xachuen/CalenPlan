@@ -6,6 +6,7 @@ import FriendsButton from './subcomponents/FriendsButton/FriendsButton';
 import NotificationButton from './subcomponents/NotificationButton/NotificationButton';
 import CalendarButton from './subcomponents/CalendarButton/CalendarButton';
 import { SignedIn } from '@clerk/clerk-react';
+import MonthTitle from './subcomponents/MonthTitle/MonthTitle';
 
 
 const NavBar = () => {
@@ -17,7 +18,7 @@ const NavBar = () => {
   
       <div className={`${styles.NavCenter}`}>
         <SignedIn>
-          <h1>February 2024</h1>
+          <MonthTitle/>
         </SignedIn>
       </div>
 
