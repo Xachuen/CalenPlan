@@ -1,8 +1,8 @@
 :root {
     --row-size: 7.5rem;
     --column-size: 7.5rem;
-    --weekday-title-size: 1.6rem;
-    --arrow-size: 2rem;
+    --weekday-title-size: 3rem;
+    --arrow-size: 4rem;
   }
 
 .CenterContainer {
@@ -31,26 +31,14 @@
     border-radius: 10px;
 }
 
-.DayItem {
-    background-color: #6A6D88;
-    height: 100%;
-    width: 100%;
-}
-
 .DayTitle{
     font-size: 1.1rem;
     color: white;
     text-align: center;
 }
 
-.ArrowButton {
-    max-width: 100%;
-    height: 100%;
-    padding: 0.4rem;
-    border-radius: 15px;
-}
-
 .LeftArrow {
+    height: 100%;
     grid-row-start: 1;
     grid-row-end: 8;
     grid-column-start: 1;
@@ -58,10 +46,18 @@
 }
 
 .RightArrow {
+    height: 100%;
     grid-row-start: 1;
     grid-row-end: 8;
     grid-column-start: 9;
     grid-column-end: 10;
+}
+
+.ArrowButton {
+    max-width: 100%;
+    width: 2.2rem;
+    padding: 0.4rem;
+    border-radius: 15px;
 }
 
 .ArrowButton:hover {
