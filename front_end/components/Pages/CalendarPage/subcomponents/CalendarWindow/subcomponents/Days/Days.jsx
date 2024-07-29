@@ -39,18 +39,18 @@ const Days = () => {
 
     let newDayData = []
     for (let i = prevMonthDays - firstDayOfMonth; i < prevMonthDays; i++) {
-      newDayData.push({dayNumber: i});
+      newDayData.push({dayNumber: i, colorDisplay: "faded"});
       remainingDays -= 1;
     }
     
     // Create visible days of current month.
     for (let i = 1; i <= currentMonthDays; i++) {
-      newDayData.push({dayNumber: i});
+      newDayData.push({dayNumber: i, colorDisplay: "full"});
     }
 
     // Get visible days of next month.
     for (let i = 1; i <= remainingDays; i++) {
-      newDayData.push({dayNumber: i});
+      newDayData.push({dayNumber: i, colorDisplay: "faded"});
     }
 
     setDayData(newDayData);
@@ -60,7 +60,10 @@ const Days = () => {
   return ( 
     <>
       {dayData.map( (dayObject) => {
-        return <DayBox dayNumber={dayObject.dayNumber}/>
+        return <DayBox 
+        dayNumber={dayObject.dayNumber}
+        colorDisplay={dayObject.colorDisplay}
+        />
       })}
     </>
    );
