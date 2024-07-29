@@ -2,10 +2,10 @@ import React from 'react';
 
 import styles from './DayBox.module.css';
 
-const DayBox = () => {
+const DayBox = ( { dayNumber }) => {
   return ( 
     <div className={`${styles.DayBox}`}>
-      
+      {dayNumber}
     </div>
    );
 }
