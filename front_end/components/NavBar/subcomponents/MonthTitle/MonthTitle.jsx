@@ -1,16 +1,16 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect, useContext } from 'react';
+import { DisplayMonthContext } from '../../../../src/App';
 
 import styles from './MonthTitle.module.css';
 
 const MonthTitle = () => {
   const monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
   const [currentMonth, setCurrentMonth] = useState("February 2024"); 
 
+  const { displayMonth: currentDate } = useContext(DisplayMonthContext);
+
   useEffect(()=>{
-    const currentDate = new Date();
     const month = monthName[currentDate.getMonth()];
     const year = currentDate.getFullYear();
     setCurrentMonth(`${month} ${year}`);

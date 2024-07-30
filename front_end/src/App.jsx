@@ -1,18 +1,23 @@
-import { useState } from 'react'
+import { useState, createContext } from 'react'
 import './App.css'
+
+
+/*Components*/
 import NavBar from '../components/NavBar/NavBar'
 import MainHolder from '../components/MainHolder/MainHolder'
 
-/*Components*/
 
+export const DisplayMonthContext = createContext();
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [displayMonth, setDisplayMonth] = useState(new Date());
 
   return (
     <>
-      <NavBar/>
-      <MainHolder/>
+      <DisplayMonthContext.Provider value={ {displayMonth, setDisplayMonth} }>
+        <NavBar/>
+        <MainHolder/>
+      </DisplayMonthContext.Provider>
     </>
   )
 }

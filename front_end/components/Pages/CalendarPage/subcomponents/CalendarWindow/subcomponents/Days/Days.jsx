@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import styles from './Days.module.css';
 import DayBox from './subcomponents/DayBox/DayBox';
 
-
+import { DisplayMonthContext } from '../../../../../../../src/App';
 
 const Days = () => {
   const [dayData, setDayData] = useState([]);
 
   const maxDays = 42; // The number of boxes listed on the calendar.
 
-  const currentDate = new Date();
-  const curMonth = 11 //currentDate.getMonth();
+  const { displayMonth: currentDate } = useContext(DisplayMonthContext);
+  const curMonth = currentDate.getMonth();
   const curYear = currentDate.getFullYear();
   
   function getDaysOfMonth(year, month) {
