@@ -35,6 +35,7 @@
 
 .DayTitle{
     font-size: 1.1rem;
+    font-weight: bold;
     color: white;
     text-align: center;
     border-bottom: 2px solid #282a36;
@@ -62,8 +63,8 @@
 }
 
 .ArrowButton {
-    max-width: 100%;
-    width: 2.2rem;
+    width: 100%;
+    width: 3rem;
     padding: 0.4rem;
     border-radius: 15px;
 }
