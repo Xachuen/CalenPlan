@@ -18,6 +18,7 @@
 }
 
 .DayBox:hover {
+    border-color: white;
     border-style: solid;
     transition: 0.05s;
 }
@@ -33,6 +34,7 @@
     background-color: #6A6D88;
 }
 
-.currentday{
-
+.CurrentDay{
+    border-color: rgb(182, 182, 255);
+    border-style: solid;
 }

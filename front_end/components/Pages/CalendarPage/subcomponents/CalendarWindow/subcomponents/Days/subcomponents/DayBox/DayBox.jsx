@@ -2,9 +2,9 @@ import React from 'react';
 
 import styles from './DayBox.module.css';
 
-const DayBox = ( { dayNumber, colorDisplay }) => {
+const DayBox = ( { dayNumber, colorDisplay, isCurrentDay }) => {
   return ( 
-    <div className={`${styles.DayBox} ${styles[colorDisplay]}`}>
+    <div className={`${isCurrentDay ? styles.CurrentDay : ''} ${styles.DayBox} ${styles[colorDisplay]}`}>
       {dayNumber}
     </div>
    );
