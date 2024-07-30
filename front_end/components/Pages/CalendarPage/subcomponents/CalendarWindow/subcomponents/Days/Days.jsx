@@ -59,7 +59,7 @@ const Days = () => {
     }
 
     setDayData(newDayData);
-  }, []);
+  }, [ currentDate ]);
 
   return ( 
     <>

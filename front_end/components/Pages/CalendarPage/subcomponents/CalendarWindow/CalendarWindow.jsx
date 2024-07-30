@@ -6,7 +6,17 @@ import Days from './subcomponents/Days/Days';
 import { DisplayMonthContext } from '../../../../../src/App';
 
 const CalendarWindow = () => {
-  const { setDisplayMonth } = useContext(DisplayMonthContext);
+  const { displayMonth, setDisplayMonth } = useContext(DisplayMonthContext);
+  
+  function getNextMonth(date) {
+    const nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+    return nextMonth;
+  }
+
+  function getPastMonth(date) {
+    const pastMonth = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+    return pastMonth;
+  }
 
   return (
     <div className={styles.CenterContainer}>
@@ -15,7 +25,9 @@ const CalendarWindow = () => {
           {/* TODO: Wrap these arrows in div. */}
           <div className={`${styles.LeftArrow}`}> 
             <img className={`${styles.ArrowButton}`}
-             src='front_end\src\assets\General\triangle_left.svg'/>
+             src='front_end\src\assets\General\triangle_left.svg'
+             onClick={ () => { setDisplayMonth( getPastMonth(displayMonth) ) }}
+             />
           </div>
 
           <h2 className={`${styles.DayTitle} ${styles.GridItem}`}>Sunday</h2>
@@ -29,9 +41,8 @@ const CalendarWindow = () => {
           <div className={`${styles.RightArrow}`}>
             <img className={`${styles.ArrowButton}`}
              src='front_end\src\assets\General\triangle_right.svg'
-             onClick={ () => {}}
+             onClick={ () => { setDisplayMonth( getNextMonth(displayMonth) ) }}
              />
-             
           </div>
 
           <div className={`${styles.SeperatorBar}`}/>
