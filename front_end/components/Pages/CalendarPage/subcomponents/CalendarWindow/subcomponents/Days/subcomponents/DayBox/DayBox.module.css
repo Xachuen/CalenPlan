@@ -9,7 +9,19 @@
     justify-content: center;
     align-items: center;
     font-size: 2rem;
+
+    -webkit-user-select: none;        
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
 }
+
+.DayBox:hover {
+    border-style: solid;
+    transition: 0.05s;
+}
+
 
 .faded {
     color: #C1C1C1;

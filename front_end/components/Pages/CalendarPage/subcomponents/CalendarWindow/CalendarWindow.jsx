@@ -22,7 +22,6 @@ const CalendarWindow = () => {
     <div className={styles.CenterContainer}>
       <div className={styles.CalendarRoot}>
         <div className={styles.CalendarWindow}>
-          {/* TODO: Wrap these arrows in div. */}
           <div className={`${styles.LeftArrow}`}> 
             <img className={`${styles.ArrowButton}`}
              src='front_end\src\assets\General\triangle_left.svg'
