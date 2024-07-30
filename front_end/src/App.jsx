@@ -2,10 +2,10 @@ import { useState, createContext } from 'react'
 import './App.css'
 
 
+
 /*Components*/
 import NavBar from '../components/NavBar/NavBar'
 import MainHolder from '../components/MainHolder/MainHolder'
-
 
 export const DisplayMonthContext = createContext();
 
