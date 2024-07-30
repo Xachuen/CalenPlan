@@ -9,10 +9,9 @@ const Days = () => {
   const [dayData, setDayData] = useState([]);
 
   const maxDays = 42; // The number of boxes listed on the calendar.
-  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const currentDate = new Date();
-  const curMonth = currentDate.getMonth();
+  const curMonth = 11 //currentDate.getMonth();
   const curYear = currentDate.getFullYear();
   
   function getDaysOfMonth(year, month) {
@@ -25,46 +24,53 @@ const Days = () => {
 
 
   useEffect( () => {
-    // A list of all the date objects, a hash map? I need to figure out how I'm going to do that. Next learn MONGODB.
-    const prevMonthDays = getDaysOfMonth(curYear, curMonth - 1);
-    const currentMonthDays = getDaysOfMonth(curYear, curMonth);
-    const nextMonthDays = getDaysOfMonth(curYear, curMonth + 1);
-
     const firstDayOfMonth = getWeekday(curYear, curMonth, 1);
-
+    const currentMonthDays = getDaysOfMonth(curYear, curMonth);
     let remainingDays = maxDays - currentMonthDays;
 
-    // Get visible days of last month.
-    console.log("rendered");
 
     let newDayData = []
-    for (let i = prevMonthDays - firstDayOfMonth; i < prevMonthDays; i++) {
-      newDayData.push({dayNumber: i, colorDisplay: "faded"});
+
+    // Get visible days of last month.
+    const prevMonth = curMonth === 0 ? 11 : curMonth - 1;
+    const prevYear = curMonth === 0 ? curYear - 1 : curYear;
+    const prevMonthDays = getDaysOfMonth(prevYear, prevMonth);
+
+    console.log(firstDayOfMonth)
+    console.log(prevMonthDays)
+    for (let i = prevMonthDays - firstDayOfMonth + 1; i <= prevMonthDays; i++) {
+      const date_id = `${prevYear}-${prevMonth + 1}-${i}`;
+      newDayData.push({date_id, dayNumber: i, colorDisplay: "faded"});
       remainingDays -= 1;
     }
     
     // Create visible days of current month.
     for (let i = 1; i <= currentMonthDays; i++) {
-      newDayData.push({dayNumber: i, colorDisplay: "full"});
+      const date_id = `${curYear}-${curMonth + 1}-${i}`;
+      newDayData.push({date_id, dayNumber: i, colorDisplay: "full"});
     }
 
+    const nextMonth = curMonth === 11 ? 0 : curMonth + 1;
+    const nextYear = curMonth === 11 ? curYear + 1 : curYear;
     // Get visible days of next month.
     for (let i = 1; i <= remainingDays; i++) {
-      newDayData.push({dayNumber: i, colorDisplay: "faded"});
+      const date_id = `${nextYear}-${nextMonth + 1}-${i}`;
+      newDayData.push({date_id, dayNumber: i, colorDisplay: "faded"});
     }
 
     setDayData(newDayData);
-    console.log(dayData);
   }, []);
 
   return ( 
     <>
       {dayData.map( (dayObject) => {
-        return <DayBox 
+        return <DayBox
+        key = {dayObject.date_id}
         dayNumber={dayObject.dayNumber}
         colorDisplay={dayObject.colorDisplay}
         />
       })}
+      {console.log(dayData)}
     </>
    );
 }
