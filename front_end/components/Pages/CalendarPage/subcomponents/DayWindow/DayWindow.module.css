@@ -1,6 +1,6 @@
 :root {
-    --row-size: 10rem;
-    --column-size: auto;
+    --day-row-size: 10rem;
+    --day-column-size: auto;
 }
 
 .CenterContainer {
@@ -53,8 +53,8 @@
 
 .DayWindow {
     display: grid;
-    grid-template-rows: repeat(23, var(--row-size) 0.2rem);
-    grid-template-columns: var(--column-size);
+    grid-template-rows: repeat(23, var(--day-row-size) 0.2rem);
+    grid-template-columns: var(--day-column-size);
     border-radius: 10px;
     margin: 0;
     padding: 0;
