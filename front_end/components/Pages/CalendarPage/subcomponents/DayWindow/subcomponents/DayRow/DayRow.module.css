@@ -1,3 +1,18 @@
 .DayRow {
-  
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.DayRowText {
+    font-weight: bold;
+    color: #6A6D88;
+    font-size: 1.3rem;
+    -webkit-user-select: none;        
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
 }

@@ -2,11 +2,11 @@ import React from 'react';
 
 import styles from './DayRow.module.css';
 
-const DayRow = () => {
+const DayRow = ( { strRep, hourLabel, timeDivide }) => {
   return ( 
     <>
-      <div>
-        poop
+      <div className={styles.DayRow}>
+        <span className={styles.DayRowText}>{strRep}</span>
       </div>
     </>
    );

@@ -71,14 +71,15 @@ const Days = () => {
   return ( 
     <>
       {dayData.map( (dayObject) => {
-        return <DayBox
-        key = {dayObject.date_id}
-        dayNumber={dayObject.dayNumber}
-        colorDisplay={dayObject.colorDisplay}
-        isCurrentDay={dayObject.isCurrentDay}
-        />
+        return (
+          <DayBox
+          key = {dayObject.date_id}
+          dayNumber={dayObject.dayNumber}
+          colorDisplay={dayObject.colorDisplay}
+          isCurrentDay={dayObject.isCurrentDay}
+          />
+        )
       })}
-      {console.log(dayData)}
     </>
    );
 }

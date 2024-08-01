@@ -4,8 +4,9 @@ import { DisplayMonthContext } from '../../../../src/App';
 
 import styles from './MonthTitle.module.css';
 
+import { monthName } from '../../../../utils/dateUtils';
+
 const MonthTitle = () => {
-  const monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
   const [currentMonth, setCurrentMonth] = useState("February 2024"); 
 
   const { displayMonth: currentDate } = useContext(DisplayMonthContext);

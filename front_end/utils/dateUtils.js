@@ -23,3 +23,6 @@ export function areDatesEqual(date1, date2) {
            date1.getMonth() === date2.getMonth() &&
            date1.getDate() === date2.getDate();
 }
+
+export const monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+export const weekdayName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
