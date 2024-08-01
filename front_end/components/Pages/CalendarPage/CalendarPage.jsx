@@ -8,8 +8,8 @@ import DayWindow from './subcomponents/DayWindow/DayWindow';
 const CalendarPage = () => {
 
   return (
-    <DayWindow/> 
-    // <CalendarWindow/>
+    // <DayWindow/> 
+    <CalendarWindow/>
    );
 }
  
