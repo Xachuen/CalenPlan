@@ -36,13 +36,13 @@ const Days = () => {
     let newDayData = []
 
     // Get visible days of last month.
-    // TODO: Refactor into using date object.
     const prevDate = getPastMonth(currentDate);
     const prevMonth = prevDate.getMonth();
     const prevYear = prevDate.getFullYear();
 
     const prevMonthDays = getDaysOfMonth(prevDate);
 
+    // TODO: fix selection to work for other months.
     for (let i = prevMonthDays - firstDayOfMonth + 1; i <= prevMonthDays; i++) {
       const date_id = `${prevYear}-${prevMonth + 1}-${i}`;
       const date_obj = new Date(prevDate.getTime());
@@ -54,7 +54,7 @@ const Days = () => {
     // Create visible days of current month.
     for (let i = 1; i <= currentMonthDays; i++) {
       const date_id = `${curYear}-${curMonth + 1}-${i}`;
-      const date_obj = new Date(today.getTime());
+      const date_obj = new Date(currentDate.getTime());
       date_obj.setDate(i);
       newDayData.push({date_obj, date_id, dayNumber: i, colorDisplay: "full", isCurrentDay: areDatesEqual(today, new Date(curYear, curMonth, i)) });
     }
