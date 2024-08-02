@@ -15,10 +15,12 @@ function App() {
 
   return (
     <>
-      <DisplayMonthContext.Provider value={ {displayMonth, setDisplayMonth} }>
-        <NavBar/>
-        <MainHolder/>
-      </DisplayMonthContext.Provider>
+      <Router>
+        <DisplayMonthContext.Provider value={ {displayMonth, setDisplayMonth} }>
+          <NavBar/>
+          <MainHolder/>
+        </DisplayMonthContext.Provider>
+      </Router>
     </>
   )
 }

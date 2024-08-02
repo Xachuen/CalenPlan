@@ -45,14 +45,18 @@ const Days = () => {
 
     for (let i = prevMonthDays - firstDayOfMonth + 1; i <= prevMonthDays; i++) {
       const date_id = `${prevYear}-${prevMonth + 1}-${i}`;
-      newDayData.push({date_id, dayNumber: i, colorDisplay: "faded", isCurrentDay: areDatesEqual(today, new Date(prevYear, prevMonth, i)) });
+      const date_obj = new Date(prevDate.getTime());
+      date_obj.setDate(i);
+      newDayData.push({date_obj, date_id, dayNumber: i, colorDisplay: "faded", isCurrentDay: areDatesEqual(today, new Date(prevYear, prevMonth, i)) });
       remainingDays -= 1;
     }
     
     // Create visible days of current month.
     for (let i = 1; i <= currentMonthDays; i++) {
       const date_id = `${curYear}-${curMonth + 1}-${i}`;
-      newDayData.push({date_id, dayNumber: i, colorDisplay: "full", isCurrentDay: areDatesEqual(today, new Date(curYear, curMonth, i)) });
+      const date_obj = new Date(today.getTime());
+      date_obj.setDate(i);
+      newDayData.push({date_obj, date_id, dayNumber: i, colorDisplay: "full", isCurrentDay: areDatesEqual(today, new Date(curYear, curMonth, i)) });
     }
 
     const nextDate = getNextMonth(currentDate);
@@ -62,7 +66,9 @@ const Days = () => {
     // Get visible days of next month.
     for (let i = 1; i <= remainingDays; i++) {
       const date_id = `${nextYear}-${nextMonth + 1}-${i}`;
-      newDayData.push({date_id, dayNumber: i, colorDisplay: "faded", isCurrentDay: areDatesEqual(today, new Date(nextYear, nextMonth, i)) });
+      const date_obj = new Date(nextDate.getTime());
+      date_obj.setDate(i);
+      newDayData.push({date_obj, date_id, dayNumber: i, colorDisplay: "faded", isCurrentDay: areDatesEqual(today, new Date(nextYear, nextMonth, i)) });
     }
 
     setDayData(newDayData);
@@ -70,9 +76,11 @@ const Days = () => {
 
   return ( 
     <>
+      {console.log(dayData)}
       {dayData.map( (dayObject) => {
         return <DayBox
         key = {dayObject.date_id}
+        dateObj = {dayObject.date_obj}
         dayNumber={dayObject.dayNumber}
         colorDisplay={dayObject.colorDisplay}
         isCurrentDay={dayObject.isCurrentDay}
