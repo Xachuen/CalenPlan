@@ -17,7 +17,7 @@
     display: inline-block;
 }
 
-.BackArrow {
+.ImageButtonContainer {
     background-color: #5B5E76;
     border-radius: 150px;
     height: 3rem;
@@ -28,10 +28,14 @@
     align-items: center;
 }
 
-.BackArrow:hover {
+.ImageButtonContainer:hover {
     background-color: #4c4f63;
 }
 
-.ArrowImage{
+.ArrowImage {
+    height: 2rem;
+}
+
+.PlusImage {
     height: 2rem;
 }
