@@ -6,7 +6,7 @@ import { DisplayMonthContext } from '../../../../../../../src/App';
 import { weekdayName } from '../../../../../../../utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
 
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Dropdown } from 'react-bootstrap';
 
 const DayHeader = () => {
   const navigate = useNavigate();
@@ -17,12 +17,23 @@ const DayHeader = () => {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
+  /* Modal event selection */
+  const [ selectedEvent, setSelectedEvent ] = useState('');
+  function cEventChangeSelection(event) {
+    setSelectedEvent(event.target.value);
+  }
+
+  /* Time selection */
+  const [ selectedStartTime, setSelectedStartTime ] = useState('');
+  const [ selectedEndTime, setSelectedEndTime ] = useState('');
+
+
   return (
     <>
       <div className={styles.DayHeader}>
         <div className={styles.CurrentDayText}>{`${weekdayName[displayMonth.getDay()]}, ${displayMonth.getDate()}`}</div>
         <div className={styles.ImageButtonContainer} onClick={() => {
-          navigate("/")
+          navigate("/");
           }}>
           <img className={styles.ArrowImage} src='front_end\src\assets\General\arrow_top_right.svg'/>
         </div> 
@@ -33,15 +44,43 @@ const DayHeader = () => {
 
       <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Create Event</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+
+          <div className={styles.EventCreationElement}>
+            <span>Time: </span>
+            <input id="appt-time"
+             type="time"
+             value={selectedStartTime}
+             required
+             onChange={(event)=>{setSelectedStartTime(event.target.value)}}/>
+
+            <span> to </span>
+
+            <input id="appt-time"
+             type="time"
+             value={selectedEndTime}
+             required
+             max={selectedStartTime}
+             onChange={(event)=>{setSelectedEndTime(event.target.value)}}/>
+          </div>
+          <div className={styles.EventCreationElement}>
+            <span>Event Type: </span>
+            <select name="" id="event-type" onChange={ () => { } }>
+              <option value="Solo">Solo</option>
+              <option value="Group">Group</option>
+            </select>
+          </div>
+
+        {/* Location, Description, Time, Title */}
+        </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={handleClose}>
-            Save Changes
+            Add
           </Button>
         </Modal.Footer>
       </Modal>
