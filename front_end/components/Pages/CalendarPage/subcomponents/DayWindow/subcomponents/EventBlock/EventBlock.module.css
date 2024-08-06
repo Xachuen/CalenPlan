@@ -1,0 +1,29 @@
+.EventBlock {
+    height: 10rem;
+    position: absolute;
+    background-color: rgb(255, 245, 157);
+    border-style: solid;
+    border-color:rgb(199, 191, 119);
+    border-radius: 12px;
+    width: 100%;
+    left: 4rem;
+    font-weight: bold;
+    padding: 0.6rem;
+    top: 0;
+}
+
+.EventName {
+    margin: 0;
+    padding: 0;
+}
+
+.EventTime {
+    color: rgba(71, 71, 71, 0.479);
+    padding: 0;
+    margin: 0;
+}
+
+/* .EventBlock:hover {
+    width: 10rem;
+    transition: 0.7s; 
+} */

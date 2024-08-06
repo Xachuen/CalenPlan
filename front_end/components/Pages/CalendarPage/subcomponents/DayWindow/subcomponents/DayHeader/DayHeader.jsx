@@ -42,47 +42,47 @@ const DayHeader = () => {
         </div>
       </div>
 
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Create Event</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <form>
+           <div className={styles.EventCreationElement}>
+              <span>Time: </span>
+              <input id="appt-time"
+              type="time"
+              value={selectedStartTime}
+              required
+              onChange={(event)=>{setSelectedStartTime(event.target.value)}}/>
 
-          <div className={styles.EventCreationElement}>
-            <span>Time: </span>
-            <input id="appt-time"
-             type="time"
-             value={selectedStartTime}
-             required
-             onChange={(event)=>{setSelectedStartTime(event.target.value)}}/>
+              <span> to </span>
 
-            <span> to </span>
-
-            <input id="appt-time"
-             type="time"
-             value={selectedEndTime}
-             required
-             max={selectedStartTime}
-             onChange={(event)=>{setSelectedEndTime(event.target.value)}}/>
-          </div>
-          <div className={styles.EventCreationElement}>
-            <span>Event Type: </span>
-            <select name="" id="event-type" onChange={ () => { } }>
-              <option value="Solo">Solo</option>
-              <option value="Group">Group</option>
-            </select>
-          </div>
-
+              <input id="appt-time"
+                type="time"
+                value={selectedEndTime}
+                required
+                max={selectedStartTime}
+                onChange={(event)=>{setSelectedEndTime(event.target.value)}}/>
+            </div>
+            <div className={styles.EventCreationElement}>
+              <span>Event Type: </span>
+              <select name="" id="event-type" onChange={ () => { } }>
+                <option value="Solo">Solo</option>
+                <option value="Group">Group</option>
+              </select>
+            </div>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Add
+            </Button>
+ 
         {/* Location, Description, Time, Title */}
+          </form>
+
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Add
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
 

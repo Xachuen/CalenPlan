@@ -13,27 +13,32 @@ const Days = () => {
 
   const { displayMonth: currentDate } = useContext(DisplayMonthContext);
   
-  // function getDaysOfMonth(year, month) {
-  //   return new Date(year, month + 1, 0).getDate();
-  // }
+  const generateDayData = (start, end, year, month, colorDisplay, today) => {
+    const dayDataArray = [];
+    for (let i = start; i <= end; i++) {
+      const date_id = `${year}-${month + 1}-${i}`;
+      const date_obj = new Date(year, month, i);
+      dayDataArray.push({
+        date_obj,
+        date_id,
+        dayNumber: i,
+        colorDisplay,
+        isCurrentDay: areDatesEqual(today, date_obj)
+      });
+    }
+    return dayDataArray;
+  };
 
-  // function getWeekday(year, month, day) {
-  //   return new Date(year, month, day).getDay();
-  // }
 
-
-  useEffect( () => {
+  useEffect(() => {
     const today = new Date();
 
     const curYear = currentDate.getFullYear();
     const curMonth = currentDate.getMonth();
 
-    const firstDayOfMonth = getWeekday( new Date( currentDate.getFullYear(), currentDate.getMonth(), 1 ));
+    const firstDayOfMonth = getWeekday(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1));
     const currentMonthDays = getDaysOfMonth(currentDate);
-
-    let remainingDays = maxDays - currentMonthDays;
-
-    let newDayData = []
+    let newDayData = [];
 
     // Get visible days of last month.
     const prevDate = getPastMonth(currentDate);
@@ -41,38 +46,22 @@ const Days = () => {
     const prevYear = prevDate.getFullYear();
 
     const prevMonthDays = getDaysOfMonth(prevDate);
+    newDayData.push(...generateDayData(prevMonthDays - firstDayOfMonth + 1, prevMonthDays, prevYear, prevMonth, "faded", today));
 
-    // TODO: fix selection to work for other months.
-    for (let i = prevMonthDays - firstDayOfMonth + 1; i <= prevMonthDays; i++) {
-      const date_id = `${prevYear}-${prevMonth + 1}-${i}`;
-      const date_obj = new Date(prevDate.getTime());
-      date_obj.setDate(i);
-      newDayData.push({date_obj, date_id, dayNumber: i, colorDisplay: "faded", isCurrentDay: areDatesEqual(today, new Date(prevYear, prevMonth, i)) });
-      remainingDays -= 1;
-    }
-    
     // Create visible days of current month.
-    for (let i = 1; i <= currentMonthDays; i++) {
-      const date_id = `${curYear}-${curMonth + 1}-${i}`;
-      const date_obj = new Date(currentDate.getTime());
-      date_obj.setDate(i);
-      newDayData.push({date_obj, date_id, dayNumber: i, colorDisplay: "full", isCurrentDay: areDatesEqual(today, new Date(curYear, curMonth, i)) });
-    }
+    newDayData.push(...generateDayData(1, currentMonthDays, curYear, curMonth, "full", today));
 
+    const remainingDays = maxDays - newDayData.length;
+
+    // Get visible days of next month.
     const nextDate = getNextMonth(currentDate);
     const nextMonth = nextDate.getMonth();
     const nextYear = nextDate.getFullYear();
 
-    // Get visible days of next month.
-    for (let i = 1; i <= remainingDays; i++) {
-      const date_id = `${nextYear}-${nextMonth + 1}-${i}`;
-      const date_obj = new Date(nextDate.getTime());
-      date_obj.setDate(i);
-      newDayData.push({date_obj, date_id, dayNumber: i, colorDisplay: "faded", isCurrentDay: areDatesEqual(today, new Date(nextYear, nextMonth, i)) });
-    }
+    newDayData.push(...generateDayData(1, remainingDays, nextYear, nextMonth, "faded", today));
 
     setDayData(newDayData);
-  }, [ currentDate ]);
+  }, [currentDate]);
 
   return ( 
     <>
