@@ -43,3 +43,11 @@
 .EventCreationElement {
     margin-bottom: 0.5rem;
 }
+
+.CloseButton {
+    margin: 0.5rem;
+}
+
+.AddButton {
+    margin: 0.5rem;
+}

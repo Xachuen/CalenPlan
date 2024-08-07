@@ -13,11 +13,12 @@ const DayWindow = () => {
 
   useEffect( () => {
     const tempHourList = []
-    for (let i = 1; i <= 23; i++) {
+    for (let i = 1; i <= 24; i++) {
       const hourLabel = i <= 12 ? i : i - 12;
+      const hour = i;
       const timeDivide = i < 12 ? "AM" : "PM"
       const strRep = hourLabel.toString() + timeDivide
-      tempHourList.push( { hourLabel, timeDivide, strRep } )
+      tempHourList.push( { hour, hourLabel, timeDivide, strRep } )
     }
     setHourList(tempHourList);
     
@@ -36,7 +37,8 @@ const DayWindow = () => {
                 hourList.map( (hourObject) => {
                   return (
                   <React.Fragment key={hourObject.strRep}>
-                    <DayRow 
+                    <DayRow
+                    hour={hourObject.hour} 
                     strRep={hourObject.strRep}
                     hourLabel={hourObject.hourLabel}
                     timeDivide={hourObject.timeDivide}

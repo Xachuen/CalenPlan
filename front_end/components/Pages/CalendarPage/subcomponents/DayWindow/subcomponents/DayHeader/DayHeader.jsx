@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { EventsDataContext } from '../../DayWindow';
 
 import styles from './DayHeader.module.css';
 import { DisplayMonthContext } from '../../../../../../../src/App';
@@ -9,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 
 const DayHeader = () => {
+  const { eventsData, setEventsData } = useContext(EventsDataContext);
+
   const navigate = useNavigate();
   const { displayMonth, setDisplayMonth } = useContext(DisplayMonthContext);
   
@@ -16,6 +19,33 @@ const DayHeader = () => {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+
+  const submitEventCreation = (event) => {
+    event.preventDefault();
+    handleClose();
+    
+    const date_id = `${displayMonth.getFullYear()}-${displayMonth.getMonth()}-${displayMonth.getDate()}`;
+
+    // Add the event to the dictionary of lists that have the data.
+    console.log(selectedStartTime);
+    console.log(typeof selectedStartTime);
+
+    const [hour] = selectedStartTime.split(':');
+    const hourNumber = parseInt(hour, 10);
+    
+    setEventsData(prevEventsData => ({
+      ...prevEventsData,
+      [date_id]: {
+        ...(prevEventsData[date_id] || {}),
+        [hourNumber]: [
+          ...(prevEventsData[date_id] && prevEventsData[date_id][hourNumber] 
+            ? prevEventsData[date_id][hourNumber] 
+            : []),
+          { something: "something" }
+        ]
+      }
+    }));
+  }
 
   /* Modal event selection */
   const [ selectedEvent, setSelectedEvent ] = useState('');
@@ -30,6 +60,7 @@ const DayHeader = () => {
 
   return (
     <>
+      {console.log(eventsData)}
       <div className={styles.DayHeader}>
         <div className={styles.CurrentDayText}>{`${weekdayName[displayMonth.getDay()]}, ${displayMonth.getDate()}`}</div>
         <div className={styles.ImageButtonContainer} onClick={() => {
@@ -47,10 +78,10 @@ const DayHeader = () => {
           <Modal.Title>Create Event</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form onSubmit={submitEventCreation}>
            <div className={styles.EventCreationElement}>
               <span>Time: </span>
-              <input id="appt-time"
+              <input id="start-appt-time"
               type="time"
               value={selectedStartTime}
               required
@@ -58,11 +89,11 @@ const DayHeader = () => {
 
               <span> to </span>
 
-              <input id="appt-time"
+              <input id="end-appt-time"
                 type="time"
                 value={selectedEndTime}
                 required
-                max={selectedStartTime}
+                min={selectedStartTime}
                 onChange={(event)=>{setSelectedEndTime(event.target.value)}}/>
             </div>
             <div className={styles.EventCreationElement}>
@@ -72,10 +103,10 @@ const DayHeader = () => {
                 <option value="Group">Group</option>
               </select>
             </div>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button className={styles.CloseButton} variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button className={styles.CreateButton} type="submit" variant="primary">
               Add
             </Button>
  
