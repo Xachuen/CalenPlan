@@ -19,8 +19,13 @@ const DayRow = ( { hour, strRep, hourLabel, timeDivide }) => {
       <div className={styles.DayRow}>
         {/* {console.log(strRep, hourLabel, timeDivide)} */}
         {
-          eventsData[date_id] && eventsData[date_id][hour-1] && eventsData[date_id][hour-1].map( (dateEvent) => {
-           return <EventBlock/>
+          eventsData[date_id] && eventsData[date_id][hour-1] && eventsData[date_id][hour-1].map( (dateEventObj) => {
+           return <EventBlock key={crypto.randomUUID()}
+           minuteLength={dateEventObj.minuteLength}
+           minuteStart={dateEventObj.minuteStart}
+           eventName={dateEventObj.eventName}
+           eventTime={dateEventObj.eventTime}
+           />
           })
         }
         <span className={styles.DayRowText}>{strRep}</span>

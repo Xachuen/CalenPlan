@@ -2,8 +2,6 @@ import { useState, createContext } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
 
-
-
 /*Components*/
 import NavBar from '../components/NavBar/NavBar'
 import MainHolder from '../components/MainHolder/MainHolder'

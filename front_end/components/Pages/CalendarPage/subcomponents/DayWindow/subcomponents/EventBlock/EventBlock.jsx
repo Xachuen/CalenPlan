@@ -2,11 +2,11 @@ import React from 'react';
 
 import styles from './EventBlock.module.css';
 
-const EventBlock = () => {
+const EventBlock = ( { eventName, eventTime, minuteLength, minuteStart } ) => {
   return ( 
-    <div className={styles.EventBlock}>
+    <div className={styles.EventBlock} style={{height: `${minuteLength * 0.17}rem`, top: `${minuteStart * 0.17}rem`}}>
       <p className={styles.EventName}>Event</p>
-      <p className={styles.EventTime}>1am - 2pm</p>
+      <p className={styles.EventTime}>{eventTime}</p>
     </div>
 
    );

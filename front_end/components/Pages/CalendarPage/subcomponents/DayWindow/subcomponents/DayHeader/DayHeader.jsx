@@ -7,6 +7,8 @@ import { DisplayMonthContext } from '../../../../../../../src/App';
 import { weekdayName } from '../../../../../../../utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
 
+import { getMinutesAway } from '../../../../../../../utils/dateUtils';
+
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 
 const DayHeader = () => {
@@ -41,7 +43,11 @@ const DayHeader = () => {
           ...(prevEventsData[date_id] && prevEventsData[date_id][hourNumber] 
             ? prevEventsData[date_id][hourNumber] 
             : []),
-          { something: "something" }
+          { minuteLength: getMinutesAway(selectedStartTime, selectedEndTime),
+            minuteStart: getMinutesAway(hour + ":00", selectedStartTime),
+            eventName: "Event",
+            eventTime: `${selectedStartTime} to ${selectedEndTime}`
+          }
         ]
       }
     }));
