@@ -44,6 +44,10 @@
     margin-bottom: 0.5rem;
 }
 
+.CreateButton {
+    background-color: #5B5E76;
+}
+
 .CloseButton {
     margin: 0.5rem;
 }

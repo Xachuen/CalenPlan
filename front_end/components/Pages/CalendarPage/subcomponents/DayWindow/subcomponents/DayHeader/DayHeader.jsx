@@ -45,7 +45,8 @@ const DayHeader = () => {
             : []),
           { minuteLength: getMinutesAway(selectedStartTime, selectedEndTime),
             minuteStart: getMinutesAway(hour + ":00", selectedStartTime),
-            eventName: "Event",
+            eventName: eventName,
+            eventDescription: eventDescription,
             eventTime: `${selectedStartTime} to ${selectedEndTime}`
           }
         ]
@@ -62,7 +63,12 @@ const DayHeader = () => {
   /* Time selection */
   const [ selectedStartTime, setSelectedStartTime ] = useState('');
   const [ selectedEndTime, setSelectedEndTime ] = useState('');
-
+  
+  /* Event naming */
+  const [ eventName, setEventName ] = useState('');
+  
+  /* Event description */
+  const [ eventDescription, setEventDescription ] = useState('');
 
   return (
     <>
@@ -85,23 +91,45 @@ const DayHeader = () => {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={submitEventCreation}>
-           <div className={styles.EventCreationElement}>
+            <div className={styles.EventCreationElement}>
+
+              <span>Event Title: </span>
+              <input id="event-name"
+              value={eventName}
+              required
+              onChange={(event)=>{setEventName(event.target.value)}}/>
+
+            </div>
+
+            <div className={styles.EventCreationElement}>
+
+              <span>Description: </span>
+              <input
+              type="text"
+              value={eventDescription}
+              onChange={(event) => setEventDescription(event.target.value)}
+              />
+
+            </div>
+
+            <div className={styles.EventCreationElement}>
+
               <span>Time: </span>
               <input id="start-appt-time"
               type="time"
               value={selectedStartTime}
               required
               onChange={(event)=>{setSelectedStartTime(event.target.value)}}/>
-
               <span> to </span>
-
               <input id="end-appt-time"
                 type="time"
                 value={selectedEndTime}
                 required
                 min={selectedStartTime}
                 onChange={(event)=>{setSelectedEndTime(event.target.value)}}/>
+              
             </div>
+                  
             <div className={styles.EventCreationElement}>
               <span>Event Type: </span>
               <select name="" id="event-type" onChange={ () => { } }>
