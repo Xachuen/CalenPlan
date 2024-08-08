@@ -12,10 +12,26 @@ import { getMinutesAway } from '../../../../../../../utils/dateUtils';
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 
 const DayHeader = () => {
+
+  function formatTime(inputTime) {
+    // Split the input time into hours and minutes
+    let [hours, minutes] = inputTime.split(':').map(Number);
+
+    // Determine the period (AM/PM) and adjust hours
+    let period = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+
+    // Format minutes to ensure two digits
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    // Combine hours, minutes, and period into the final format
+    return `${hours}:${minutes}${period}`;
+  }
+
   const { eventsData, setEventsData } = useContext(EventsDataContext);
 
   const navigate = useNavigate();
-  const { displayMonth, setDisplayMonth } = useContext(DisplayMonthContext);
+  const { displayMonth } = useContext(DisplayMonthContext);
   
   /* Modal handler */
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +63,7 @@ const DayHeader = () => {
             minuteStart: getMinutesAway(hour + ":00", selectedStartTime),
             eventName: eventName,
             eventDescription: eventDescription,
-            eventTime: `${selectedStartTime} to ${selectedEndTime}`
+            eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`
           }
         ]
       }
@@ -86,16 +102,15 @@ const DayHeader = () => {
       </div>
 
       <Modal show={showModal} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Create Event</Modal.Title>
-        </Modal.Header>
         <Modal.Body>
           <form onSubmit={submitEventCreation}>
+            <h3 className={styles.CreateEventTitle}>Create Event</h3>
             <div className={styles.EventCreationElement}>
 
               <span>Event Title: </span>
               <input id="event-name"
               value={eventName}
+              maxlength="20"
               required
               onChange={(event)=>{setEventName(event.target.value)}}/>
 
@@ -106,6 +121,7 @@ const DayHeader = () => {
               <span>Description: </span>
               <input
               type="text"
+              maxlength="50"
               value={eventDescription}
               onChange={(event) => setEventDescription(event.target.value)}
               />
@@ -137,12 +153,12 @@ const DayHeader = () => {
                 <option value="Group">Group</option>
               </select>
             </div>
-            <Button className={styles.CloseButton} variant="secondary" onClick={handleClose}>
+            <button className={styles.CloseButton} onClick={handleClose}>
               Close
-            </Button>
-            <Button className={styles.CreateButton} type="submit" variant="primary">
+            </button>
+            <button className={`${styles.CreateButton}`} type="submit">
               Add
-            </Button>
+            </button>
  
         {/* Location, Description, Time, Title */}
           </form>

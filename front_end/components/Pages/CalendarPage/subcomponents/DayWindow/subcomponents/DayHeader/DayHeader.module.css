@@ -45,13 +45,27 @@
 }
 
 .CreateButton {
+    padding: 0.7rem;
+    border-radius: 10px;
     background-color: #5B5E76;
+    color: white;
 }
 
 .CloseButton {
+    padding: 0.7rem;
+    border-radius: 10px;
     margin: 0.5rem;
 }
 
 .AddButton {
     margin: 0.5rem;
+}
+
+.CreateEventTitle {
+    color: white;
+    font-weight: bold;
+    background-color: #4c4f63;
+    display: inline-block;
+    padding: 0.7rem;
+    border-radius: 20px;
 }
