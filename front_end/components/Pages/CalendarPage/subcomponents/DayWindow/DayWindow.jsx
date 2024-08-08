@@ -5,11 +5,9 @@ import DayRow from './subcomponents/DayRow/DayRow';
 import SeperatorBar from './subcomponents/SeperatorBar/SeperatorBar';
 import DayHeader from './subcomponents/DayHeader/DayHeader';
 
-export const EventsDataContext = createContext();
 
 const DayWindow = () => {
   const [ hourList, setHourList ] = useState([]);
-  const [ eventsData, setEventsData ] = useState({});
 
   useEffect( () => {
     const tempHourList = []
@@ -27,31 +25,29 @@ const DayWindow = () => {
   
 
   return ( 
-    <EventsDataContext.Provider value={ { eventsData, setEventsData } }>
-      <div className={styles.CenterContainer}>
-        <div className={styles.DayContainer}>
-          <DayHeader/>
-          <div className={styles.DayRoot}>
-            <div className={styles.DayWindow}>
-              {
-                hourList.map( (hourObject) => {
-                  return (
-                  <React.Fragment key={hourObject.strRep}>
-                    <DayRow
-                    hour={hourObject.hour} 
-                    strRep={hourObject.strRep}
-                    hourLabel={hourObject.hourLabel}
-                    timeDivide={hourObject.timeDivide}
-                    />
-                    <SeperatorBar/>
-                  </React.Fragment>
-                  )
-              })}
-            </div>
+    <div className={styles.CenterContainer}>
+      <div className={styles.DayContainer}>
+        <DayHeader/>
+        <div className={styles.DayRoot}>
+          <div className={styles.DayWindow}>
+            {
+              hourList.map( (hourObject) => {
+                return (
+                <React.Fragment key={hourObject.strRep}>
+                  <DayRow
+                  hour={hourObject.hour} 
+                  strRep={hourObject.strRep}
+                  hourLabel={hourObject.hourLabel}
+                  timeDivide={hourObject.timeDivide}
+                  />
+                  <SeperatorBar/>
+                </React.Fragment>
+                )
+            })}
           </div>
         </div>
       </div>
-    </EventsDataContext.Provider>
+    </div>
    );
 }
  

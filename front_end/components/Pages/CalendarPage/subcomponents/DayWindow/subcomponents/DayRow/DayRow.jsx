@@ -1,8 +1,7 @@
 import React from 'react';
 import { useContext, useState } from 'react';
 
-import { EventsDataContext} from '../../DayWindow';
-import { DisplayMonthContext } from '../../../../../../../src/App';
+import { DisplayMonthContext, EventsDataContext } from '../../../../../../../src/App';
 
 import styles from './DayRow.module.css';
 import EventBlock from '../EventBlock/EventBlock';

@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { EventsDataContext } from '../../DayWindow';
 
 import styles from './DayHeader.module.css';
-import { DisplayMonthContext } from '../../../../../../../src/App';
+import { DisplayMonthContext, EventsDataContext } from '../../../../../../../src/App';
 
 import { weekdayName } from '../../../../../../../utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
@@ -110,7 +109,7 @@ const DayHeader = () => {
               <span>Event Title: </span>
               <input id="event-name"
               value={eventName}
-              maxlength="20"
+              maxLength="20"
               required
               onChange={(event)=>{setEventName(event.target.value)}}/>
 
@@ -121,7 +120,7 @@ const DayHeader = () => {
               <span>Description: </span>
               <input
               type="text"
-              maxlength="50"
+              maxLength="50"
               value={eventDescription}
               onChange={(event) => setEventDescription(event.target.value)}
               />
