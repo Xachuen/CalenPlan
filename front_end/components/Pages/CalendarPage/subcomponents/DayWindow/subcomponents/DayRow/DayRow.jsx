@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import { EventsDataContext} from '../../DayWindow';
 import { DisplayMonthContext } from '../../../../../../../src/App';
@@ -7,15 +7,18 @@ import { DisplayMonthContext } from '../../../../../../../src/App';
 import styles from './DayRow.module.css';
 import EventBlock from '../EventBlock/EventBlock';
 
+
 const DayRow = ( { hour, strRep, hourLabel, timeDivide }) => {
+  // Contexts
   const { eventsData, setEventsData } = useContext(EventsDataContext);
   const { displayMonth, setDisplayMonth } = useContext(DisplayMonthContext);
 
+  // Date
   const date_id = `${displayMonth.getFullYear()}-${displayMonth.getMonth()}-${displayMonth.getDate()}`;
 
-  
   return ( 
     <>
+      
       <div className={styles.DayRow}>
         {/* {console.log(strRep, hourLabel, timeDivide)} */}
         {
@@ -25,6 +28,7 @@ const DayRow = ( { hour, strRep, hourLabel, timeDivide }) => {
            minuteStart={dateEventObj.minuteStart}
            eventName={dateEventObj.eventName}
            eventTime={dateEventObj.eventTime}
+           eventDescription={dateEventObj.eventDescription}
            />
           })
         }

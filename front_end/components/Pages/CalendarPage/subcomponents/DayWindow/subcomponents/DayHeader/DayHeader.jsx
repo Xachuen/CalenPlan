@@ -103,7 +103,7 @@ const DayHeader = () => {
 
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Body>
-          <form onSubmit={submitEventCreation}>
+          <form onSubmit={submitEventCreation} autoComplete='off'>
             <h3 className={styles.CreateEventTitle}>Create Event</h3>
             <div className={styles.EventCreationElement}>
 
@@ -153,7 +153,7 @@ const DayHeader = () => {
                 <option value="Group">Group</option>
               </select>
             </div>
-            <button className={styles.CloseButton} onClick={handleClose}>
+            <button className={styles.CloseButton} type="button" onClick={handleClose}>
               Close
             </button>
             <button className={`${styles.CreateButton}`} type="submit">
