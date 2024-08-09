@@ -69,6 +69,7 @@ const Days = () => {
       {dayData.map( (dayObject) => {
         return <DayBox
         key = {dayObject.date_id}
+        date_id = {dayObject.date_id}
         dateObj = {dayObject.date_obj}
         dayNumber={dayObject.dayNumber}
         colorDisplay={dayObject.colorDisplay}

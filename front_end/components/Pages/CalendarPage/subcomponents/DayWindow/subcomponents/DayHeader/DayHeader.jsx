@@ -41,7 +41,7 @@ const DayHeader = () => {
     event.preventDefault();
     handleClose();
     
-    const date_id = `${displayMonth.getFullYear()}-${displayMonth.getMonth()}-${displayMonth.getDate()}`;
+    const date_id = `${displayMonth.getFullYear()}-${displayMonth.getMonth()+1}-${displayMonth.getDate()}`;
 
     // Add the event to the dictionary of lists that have the data.
     console.log(selectedStartTime);

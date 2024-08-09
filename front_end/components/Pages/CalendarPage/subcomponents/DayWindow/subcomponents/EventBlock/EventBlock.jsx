@@ -25,9 +25,9 @@ const EventBlock = ( { eventName, eventDescription, eventTime, minuteLength, min
         </Modal.Body>
       </Modal>
 
-      <div onClick={() => handleShow()} className={styles.EventBlock} style={{height: `${minuteLength * 0.17}rem`, top: `${minuteStart * 0.17}rem`}}>
-        {minuteLength >= 25 && <p className={styles.EventName}>{eventName}</p>}
-        {minuteLength >= 25 && <p className={styles.EventTime}>{eventTime}</p>}
+      <div onClick={() => handleShow()} className={styles.EventBlock} style={{height: `${minuteLength >= 25 && minuteLength * 0.17}rem`, top: `${minuteStart * 0.17}rem`}}>
+        <p className={`${styles.EventName} ${minuteLength < 25 && styles.SmallerText}`}>{eventName}</p>
+        <p className={`${styles.EventTime} ${minuteLength < 25 && styles.SmallerText}`}>{eventTime}</p>
       </div>
     </>
    );

@@ -6,9 +6,12 @@
     color: white;
     font-weight: bold;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
+    position: relative;
+    border: 3px solid transparent; /* Set default border size */
 
     -webkit-user-select: none;        
     -moz-user-select: none;
@@ -23,6 +26,11 @@
     transition: 0.05s;
 }
 
+.CircleIcon {
+    height: 1rem;
+    position: absolute;
+    top: 4.6rem;
+}
 
 .faded {
     color: #C1C1C1;

@@ -13,7 +13,7 @@ const DayRow = ( { hour, strRep, hourLabel, timeDivide }) => {
   const { displayMonth, setDisplayMonth } = useContext(DisplayMonthContext);
 
   // Date
-  const date_id = `${displayMonth.getFullYear()}-${displayMonth.getMonth()}-${displayMonth.getDate()}`;
+  const date_id = `${displayMonth.getFullYear()}-${displayMonth.getMonth()+1}-${displayMonth.getDate()}`;
 
   return ( 
     <>

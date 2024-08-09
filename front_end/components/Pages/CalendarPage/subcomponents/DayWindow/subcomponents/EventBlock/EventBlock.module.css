@@ -53,6 +53,11 @@
 .DescriptionContainer {
     min-height: 3rem;
 }
+
+.SmallerText {
+    font-size: 0.6rem;
+    height: 1rem;
+}
 /* .EventBlock:hover {
     width: 10rem;
     transition: 0.7s; 
