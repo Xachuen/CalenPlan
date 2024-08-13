@@ -69,7 +69,16 @@ app.post("/api/webhooks", async (req, res) => {
     console.log(`Webhook with an ID of ${id} and type of ${eventType}`);
     console.log("Webhook body:", evt.data);
 
-    const result = await userDataCollection.insertOne(evt.data); 
+    const result = await userDataCollection.insertOne({
+        _id: evt.data.id,
+        user_id: evt.data.id,
+        display_name: evt.data.first_name,
+        profile_picture: evt.data.profile_image_url,
+        friends: [],
+        active: true,
+        email_id: evt.data.primary_email_address_id
+
+    }); 
     console.log(result);
 
     return res.status(200).json({
