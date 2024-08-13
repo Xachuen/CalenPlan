@@ -3,6 +3,9 @@ import express from "express";
 import { Webhook } from "svix";
 import bodyParser from "body-parser";
 
+//Allow requests from different ports.
+import cors from 'cors';
+
 // Mongo DB set up.
 import { MongoClient } from 'mongodb';
 const uri = "mongodb://localhost:27017/CalenPlan";
@@ -24,6 +27,8 @@ async function connectToDatabase() {
 config({ path: '.env.local' });
 
 const app = express();
+
+app.use(cors());
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.raw({ type: "application/json" }));
@@ -69,22 +74,33 @@ app.post("/api/webhooks", async (req, res) => {
     console.log(`Webhook with an ID of ${id} and type of ${eventType}`);
     console.log("Webhook body:", evt.data);
 
-    const result = await userDataCollection.insertOne({
-        _id: evt.data.id,
-        user_id: evt.data.id,
-        display_name: evt.data.first_name,
-        profile_picture: evt.data.profile_image_url,
-        friends: [],
-        active: true,
-        email_id: evt.data.primary_email_address_id
-
-    }); 
-    console.log(result);
+   console.log(result);
 
     return res.status(200).json({
         success: true,
         message: "Webhook received",
     });
+});
+
+app.get('/api/user-data', async (req, res) => {
+    console.log("Hello! You just entered the backend!") 
+    const { database, userDataCollection } = await connectToDatabase();
+    const userId = req.query.userId;
+
+    const userData = await userDataCollection.findOne( {user_id: userId} );
+
+    // If userData does not exist, we create one.
+    if (!userData) {
+        console.log("Did not find user data, creating instead.")
+        userData = await userDataCollection.insertOne({
+            _id: evt.data.id,
+            user_id: evt.data.id,
+            friends: [],
+            active: true,
+        }); 
+    }
+
+    res.json(userData);
 });
 
 // Start the server on port 3000
