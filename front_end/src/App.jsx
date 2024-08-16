@@ -22,12 +22,13 @@ function App() {
       console.log("Success")
       // If the user is signed in, we want to get the data from
       // the database.
+      console.log(`setting user to: ${user.id}`);
       setUserData({ isSignedIn, user, isLoaded });
       
       fetch(`http://localhost:3000/api/user-data?userId=${user.id}`)
       .then(response => response.json())
       //.then(data=>console.log(data))
-      .then(data => setEventsData(data))
+      .then(data => setEventsData(data.calendar_data))
       .catch(error => console.error('Unable to get user data.', error))
     }
     else {

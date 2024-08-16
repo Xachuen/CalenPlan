@@ -28,6 +28,7 @@ config({ path: '.env.local' });
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.raw({ type: "application/json" }));
@@ -111,6 +112,8 @@ app.put('/api/user-data', async (req, res) => {
     const { database, userDataCollection } = await connectToDatabase();
     const { userId, calendar_data } = req.body;
 
+    console.log(userId);
+    console.log(calendar_data);
     if (!userId || !calendar_data) {
         return res.status(400).json({ message: 'userId and calendar_data are required' });
     }

@@ -30,7 +30,8 @@ const DayHeader = () => {
   }
 
   const { eventsData, setEventsData } = useContext(EventsDataContext);
-  const { isSignedIn, user, isLoaded } = useContext(UserDataContext);
+  const UserData = useContext(UserDataContext);
+  const { user, isSignedIn, isLoaded } = UserData;
   const navigate = useNavigate();
   const { displayMonth } = useContext(DisplayMonthContext);
   
@@ -65,15 +66,19 @@ const DayHeader = () => {
                   minuteStart: getMinutesAway(hour + ":00", selectedStartTime),
                   eventName: eventName,
                   eventDescription: eventDescription,
-                  eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`
+                  eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`,
+                  seen: [user.id]
               }
           ]
       }
   };
 
     setEventsData(updatedEventsData);
-    console.log("User ID:", user.userId);
-    
+
+    console.log("here:");
+    console.log(updatedEventsData);
+    console.log(user.id);
+
     try {
       const response = await fetch(`http://localhost:3000/api/user-data`, {
         method: 'PUT',
@@ -81,7 +86,7 @@ const DayHeader = () => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            userId: user.userId,
+            userId: user.id,
             calendar_data: updatedEventsData
         }),
 
@@ -116,7 +121,6 @@ const DayHeader = () => {
 
   return (
     <>
-      {console.log(eventsData)}
       <div className={styles.DayHeader}>
         <div className={styles.CurrentDayText}>{`${weekdayName[displayMonth.getDay()]}, ${displayMonth.getDate()}`}</div>
         <div className={styles.ImageButtonContainer} onClick={() => {
@@ -163,7 +167,14 @@ const DayHeader = () => {
               type="time"
               value={selectedStartTime}
               required
-              onChange={(event)=>{setSelectedStartTime(event.target.value)}}/>
+              onChange={(event)=>{
+                setSelectedStartTime(event.target.value)
+                if (!selectedEndTime) {
+                  const [ hour, minute ] = event.target.value.split(':')
+                  const hourJump = (parseInt(hour) + 1).toString().padStart(2, '0') + ':' + minute; 
+                  setSelectedEndTime(hourJump)
+                }
+              }}/>
               <span> to </span>
               <input id="end-appt-time"
                 type="time"
