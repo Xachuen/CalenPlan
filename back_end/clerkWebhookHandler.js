@@ -27,7 +27,6 @@ async function connectToDatabase() {
 config({ path: '.env.local' });
 
 const app = express();
-
 app.use(cors());
 
 // Middleware to parse JSON bodies
@@ -87,20 +86,52 @@ app.get('/api/user-data', async (req, res) => {
     const { database, userDataCollection } = await connectToDatabase();
     const userId = req.query.userId;
 
-    const userData = await userDataCollection.findOne( {user_id: userId} );
+    let userData = await userDataCollection.findOne( {user_id: userId} );
 
     // If userData does not exist, we create one.
     if (!userData) {
         console.log("Did not find user data, creating instead.")
-        userData = await userDataCollection.insertOne({
-            _id: evt.data.id,
-            user_id: evt.data.id,
+        await userDataCollection.insertOne({
+            _id: userId,
+            user_id: userId,
             friends: [],
             active: true,
-        }); 
+            calendar_data: {}
+        });
+         
+    userData = await userDataCollection.findOne( {user_id: userId} );
     }
 
     res.json(userData);
+});
+
+app.put('/api/user-data', async (req, res) => {
+    console.log("You are putting in the backend!");
+
+    const { database, userDataCollection } = await connectToDatabase();
+    const { userId, calendar_data } = req.body;
+
+    if (!userId || !calendar_data) {
+        return res.status(400).json({ message: 'userId and calendar_data are required' });
+    }
+
+    try {
+        const result = await userDataCollection.updateOne(
+            { user_id: userId },
+            {
+                $set: { calendar_data: calendar_data }
+            }
+        );
+
+        if (result.matchedCount > 0) {
+            res.json({ message: 'Calendar data updated successfully' });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error updating calendar data:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 // Start the server on port 3000

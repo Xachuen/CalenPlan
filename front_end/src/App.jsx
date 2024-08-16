@@ -15,15 +15,19 @@ function App() {
   const { isSignedIn, user, isLoaded } = useUser();
   const [displayMonth, setDisplayMonth] = useState(new Date());
   const [eventsData, setEventsData] = useState({});
+  const [ userData, setUserData ] = useState({ isSignedIn, user, isLoaded });
 
    useEffect(() => {
-    if (user && isSignedIn) {
+    if (user && isSignedIn && isLoaded) {
       console.log("Success")
       // If the user is signed in, we want to get the data from
       // the database.
+      setUserData({ isSignedIn, user, isLoaded });
+      
       fetch(`http://localhost:3000/api/user-data?userId=${user.id}`)
       .then(response => response.json())
-      .then(data=>console.log(data))//.then(data => setEventsData(data))
+      //.then(data=>console.log(data))
+      .then(data => setEventsData(data))
       .catch(error => console.error('Unable to get user data.', error))
     }
     else {
@@ -35,7 +39,7 @@ function App() {
   return (
     <>
       <Router>
-        <UserDataContext.Provider value = { { isSignedIn, user, isLoaded } }>
+        <UserDataContext.Provider value={userData}>
           <EventsDataContext.Provider value={ { eventsData, setEventsData } }>
             <DisplayMonthContext.Provider value={ { displayMonth, setDisplayMonth } }>
               <NavBar/>

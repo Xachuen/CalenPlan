@@ -10,6 +10,8 @@ import { getMinutesAway } from '../../../../../../../utils/dateUtils';
 
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 
+import { UserDataContext } from '../../../../../../../src/App';
+
 const DayHeader = () => {
 
   function formatTime(inputTime) {
@@ -28,7 +30,7 @@ const DayHeader = () => {
   }
 
   const { eventsData, setEventsData } = useContext(EventsDataContext);
-
+  const { isSignedIn, user, isLoaded } = useContext(UserDataContext);
   const navigate = useNavigate();
   const { displayMonth } = useContext(DisplayMonthContext);
   
@@ -37,7 +39,7 @@ const DayHeader = () => {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  const submitEventCreation = (event) => {
+  const submitEventCreation = async (event) => {
     event.preventDefault();
     handleClose();
     
@@ -50,24 +52,51 @@ const DayHeader = () => {
     const [hour] = selectedStartTime.split(':');
     const hourNumber = parseInt(hour, 10);
     
-    setEventsData(prevEventsData => ({
-      ...prevEventsData,
+    const updatedEventsData = {
+      ...eventsData,
       [date_id]: {
-        ...(prevEventsData[date_id] || {}),
-        [hourNumber]: [
-          ...(prevEventsData[date_id] && prevEventsData[date_id][hourNumber] 
-            ? prevEventsData[date_id][hourNumber] 
-            : []),
-          { minuteLength: getMinutesAway(selectedStartTime, selectedEndTime),
-            minuteStart: getMinutesAway(hour + ":00", selectedStartTime),
-            eventName: eventName,
-            eventDescription: eventDescription,
-            eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`
-          }
-        ]
+          ...(eventsData[date_id] || {}),
+          [hourNumber]: [
+              ...(eventsData[date_id] && eventsData[date_id][hourNumber]
+                  ? eventsData[date_id][hourNumber]
+                  : []),
+              {
+                  minuteLength: getMinutesAway(selectedStartTime, selectedEndTime),
+                  minuteStart: getMinutesAway(hour + ":00", selectedStartTime),
+                  eventName: eventName,
+                  eventDescription: eventDescription,
+                  eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`
+              }
+          ]
       }
-    }));
-  }
+  };
+
+    setEventsData(updatedEventsData);
+    console.log("User ID:", user.userId);
+    
+    try {
+      const response = await fetch(`http://localhost:3000/api/user-data`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userId: user.userId,
+            calendar_data: updatedEventsData
+        }),
+
+
+      });
+      if (!response.ok) {
+          throw new Error('Failed to update calendar data');
+      }
+
+      const result = await response.json();
+      console.log('Update successful:', result);
+      } catch (error) {
+          console.error('Error updating calendar data:', error);
+      }
+    }
 
   /* Modal event selection */
   const [ selectedEvent, setSelectedEvent ] = useState('');
