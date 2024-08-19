@@ -1,3 +1,36 @@
 .FriendsButton {
     height: 3rem;
 }
+
+.DropDownPosition {
+    position: absolute;
+    top: 100%; /* Position below the button */
+    left: 0;   /* Align with the left edge of the button */
+    margin-top: 0.5rem; /* Optional: Add some space between the button and dropdown */
+    z-index: 1000; /* Ensure the dropdown appears above other content */
+}
+
+.DropDownContainer {
+    position: relative;
+}
+
+.CustomMenu {
+    width: 300px;
+}
+
+.FriendsList {
+    overflow-x: hidden; /* Hide horizontal scrolling */
+    max-height: 15rem;
+}
+
+.FriendEmailInput {
+    margin: 0.5rem;
+}
+
+.AddFriendButton {
+    background-color: #44465c;
+    color: white;
+    border-radius: 10px;
+    padding: 0.25rem 0.4rem;
+    border-style: none;
+}
