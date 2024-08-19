@@ -26,6 +26,7 @@ function App() {
       console.log(`setting user to: ${user.id}`);
       setUserData({ isSignedIn, user, isLoaded });
       
+      console.log(user);
       const fetchData = async () => {
         try {
           const responseData = await getFromServer({
