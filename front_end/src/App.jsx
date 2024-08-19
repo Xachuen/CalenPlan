@@ -6,6 +6,7 @@ import './App.css'
 import NavBar from '../components/NavBar/NavBar'
 import MainHolder from '../components/MainHolder/MainHolder'
 import { useUser } from '@clerk/clerk-react';
+import { getFromServer } from '../utils/dataBaseUtils';
 
 export const DisplayMonthContext = createContext();
 export const EventsDataContext = createContext();
@@ -17,7 +18,7 @@ function App() {
   const [eventsData, setEventsData] = useState({});
   const [ userData, setUserData ] = useState({ isSignedIn, user, isLoaded });
 
-   useEffect(() => {
+  useEffect(() => {
     if (user && isSignedIn && isLoaded) {
       console.log("Success")
       // If the user is signed in, we want to get the data from
@@ -25,11 +26,21 @@ function App() {
       console.log(`setting user to: ${user.id}`);
       setUserData({ isSignedIn, user, isLoaded });
       
-      fetch(`http://localhost:3000/api/user-data?userId=${user.id}`)
-      .then(response => response.json())
-      //.then(data=>console.log(data))
-      .then(data => setEventsData(data.calendar_data))
-      .catch(error => console.error('Unable to get user data.', error))
+      const fetchData = async () => {
+        try {
+          const responseData = await getFromServer({
+            linkExtender: `/api/user-data?userId=${user.id}`
+          });
+          if (responseData) {
+            setEventsData(responseData.calendar_data);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
+
     }
     else {
       console.log("nope")

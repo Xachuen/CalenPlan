@@ -11,6 +11,7 @@ import { getMinutesAway } from '../../../../../../../utils/dateUtils';
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 
 import { UserDataContext } from '../../../../../../../src/App';
+import { putInServer } from '../../../../../../../utils/dataBaseUtils';
 
 const DayHeader = () => {
 
@@ -69,39 +70,16 @@ const DayHeader = () => {
                   eventDescription: eventDescription,
                   eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`,
               }
-          ]
-      }
-  };
+    ]}};
 
     setEventsData(updatedEventsData);
-
-    console.log("here:");
-    console.log(updatedEventsData);
-    console.log(user.id);
-
-    try {
-      const response = await fetch(`http://localhost:3000/api/user-data`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            userId: user.id,
-            calendar_data: updatedEventsData
-        }),
-
-
-      });
-      if (!response.ok) {
-          throw new Error('Failed to update calendar data');
-      }
-
-      const result = await response.json();
-      console.log('Update successful:', result);
-      } catch (error) {
-          console.error('Error updating calendar data:', error);
-      }
-    }
+    putInServer( {
+          bodyData: {
+              userId: user.id,
+              calendar_data: updatedEventsData
+          }
+    });
+  }
 
   /* Modal event selection */
   const [ selectedEvent, setSelectedEvent ] = useState('');
