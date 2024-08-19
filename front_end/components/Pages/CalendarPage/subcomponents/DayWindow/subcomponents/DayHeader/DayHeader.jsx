@@ -56,6 +56,7 @@ const DayHeader = () => {
     const updatedEventsData = {
       ...eventsData,
       [date_id]: {
+          seen: [user.id],
           ...(eventsData[date_id] || {}),
           [hourNumber]: [
               ...(eventsData[date_id] && eventsData[date_id][hourNumber]
@@ -67,7 +68,6 @@ const DayHeader = () => {
                   eventName: eventName,
                   eventDescription: eventDescription,
                   eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`,
-                  seen: [user.id]
               }
           ]
       }

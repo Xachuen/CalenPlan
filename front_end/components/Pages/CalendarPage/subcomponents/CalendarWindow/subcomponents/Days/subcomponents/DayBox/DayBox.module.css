@@ -46,3 +46,24 @@
     border-color: #b5bae7;
     border-style: solid;
 }
+
+.notification {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #F46969;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    transform: translate(25%, -20%);}
+
+
+.DayBox:hover .notification {
+    background-color: #e05b5b;
+    transition: 0.2s;
+}
