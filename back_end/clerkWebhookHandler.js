@@ -171,10 +171,8 @@ app.post('/api/user-data/:userId/friends/requests', async (req, res) => {
   const { userId } = req.params; 
   const { userDataCollection } = await connectToDatabase();
 
-  console.log("hello world");
 
   try {
-    console.log("marco");
     const result = await userDataCollection.updateOne(
       { user_email: requestedFriend },
       {

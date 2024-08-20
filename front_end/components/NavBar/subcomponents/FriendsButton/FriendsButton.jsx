@@ -3,6 +3,7 @@ import { Dropdown, Tab, Tabs } from 'react-bootstrap';
 import styles from './FriendsButton.module.css';
 import { postToServer} from '../../../../utils/dataBaseUtils';
 import { UserDataContext } from '../../../../src/App';
+import FriendRequest from '../FriendRequest/FriendRequest';
 
 const FriendsButton = ( { className } ) => {
   const { user } = useContext(UserDataContext);
@@ -51,7 +52,11 @@ const FriendsButton = ( { className } ) => {
                 <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
               </div>
             </Tab> 
-            <Tab eventKey="requests" title="Requests">hi</Tab> 
+            <Tab eventKey="requests" title="Requests">
+              <div className={styles.RequestList}>
+                <FriendRequest/>
+              </div>   
+            </Tab> 
           </Tabs>
           <Dropdown.Divider />
           <form onSubmit={(e) => sendFriendRequest(e)}>

@@ -23,6 +23,11 @@
     max-height: 15rem;
 }
 
+.RequestList {
+    overflow-x: hidden; /* Hide horizontal scrolling */
+    max-height: 15rem;
+}
+
 .FriendEmailInput {
     margin: 0.5rem;
 }
