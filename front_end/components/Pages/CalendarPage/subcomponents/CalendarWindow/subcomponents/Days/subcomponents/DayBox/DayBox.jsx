@@ -4,7 +4,7 @@ import styles from './DayBox.module.css';
 import { useNavigate } from 'react-router-dom';
 
 import { DisplayMonthContext, EventsDataContext, UserDataContext } from '../../../../../../../../../src/App';
-import { putInServer } from '../../../../../../../../../utils/dataBaseUtils';
+import { putInServer } from '../../../../../../../../../utils/dataBaseUtils.js';
 
 const DayBox = ( { date_id, dateObj, dayNumber, colorDisplay, isCurrentDay }) => {
   const navigate = useNavigate();

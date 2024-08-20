@@ -11,7 +11,7 @@ import { getMinutesAway } from '../../../../../../../utils/dateUtils';
 import { Modal, Button, Dropdown } from 'react-bootstrap';
 
 import { UserDataContext } from '../../../../../../../src/App';
-import { putInServer } from '../../../../../../../utils/dataBaseUtils';
+import { putInServer } from '../../../../../../../utils/dataBaseUtils.js';
 
 const DayHeader = () => {
 

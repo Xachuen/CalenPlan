@@ -85,6 +85,8 @@ app.post("/api/webhooks", async (req, res) => {
 app.get('/api/user-data', async (req, res) => {
     console.log("Hello! You just entered the backend!") 
     const { database, userDataCollection } = await connectToDatabase();
+    const { userEmail } = req.body;
+    console.log(userEmail);
     const userId = req.query.userId;
 
     let userData = await userDataCollection.findOne( {user_id: userId} );
@@ -136,6 +138,33 @@ app.put('/api/user-data', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
+app.post('/api/user-data', async (req, res) => {
+    console.log("You are posting in the backend!");
+
+    const { database, userDataCollection } = await connectToDatabase();
+    const { userId, userEmail } = req.body;
+
+    let userData = await userDataCollection.findOne( {user_id: userId} );
+
+    // If userData does not exist, we create one.
+    if (!userData) {
+        console.log("Did not find user data, creating instead.")
+        await userDataCollection.insertOne({
+            _id: userId,
+            user_id: userId,
+            user_email: userEmail,
+            friends: [],
+            active: true,
+            calendar_data: {}
+        });
+         
+    userData = await userDataCollection.findOne( {user_id: userId} );
+    }
+
+    res.json(userData)
+});
+
 
 // Start the server on port 3000
 app.listen(3000, () => {

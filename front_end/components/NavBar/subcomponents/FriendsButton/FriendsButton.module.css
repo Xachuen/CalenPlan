@@ -34,3 +34,17 @@
     padding: 0.25rem 0.4rem;
     border-style: none;
 }
+
+.BoldTabTitle {
+    font-weight: bold;
+}
+
+:global(.nav-link) {
+    /* Your custom styles */
+    color: #44465c !important;
+}
+
+:global(.nav-link.active) {
+    /* Your custom styles */
+    color: #282a36 !important;
+}

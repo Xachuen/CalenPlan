@@ -6,7 +6,7 @@ import './App.css'
 import NavBar from '../components/NavBar/NavBar'
 import MainHolder from '../components/MainHolder/MainHolder'
 import { useUser } from '@clerk/clerk-react';
-import { getFromServer } from '../utils/dataBaseUtils';
+import { getFromServer, postToServer, putInServer } from '../utils/dataBaseUtils.js';
 
 export const DisplayMonthContext = createContext();
 export const EventsDataContext = createContext();
@@ -29,9 +29,14 @@ function App() {
       console.log(user);
       const fetchData = async () => {
         try {
-          const responseData = await getFromServer({
-            linkExtender: `/api/user-data?userId=${user.id}`
+          const responseData = await postToServer({
+            linkExtender: `/api/user-data`,
+            bodyData: { 
+              userId: user.id,
+              userEmail: user.primaryEmailAddress.emailAddress
+             },
           });
+          
           if (responseData) {
             setEventsData(responseData.calendar_data);
           }
