@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Dropdown, Tab, Tabs } from 'react-bootstrap';
 import styles from './FriendsButton.module.css';
+import { postToServer} from '../../../../utils/dataBaseUtils';
+import { UserDataContext } from '../../../../src/App';
 
 const FriendsButton = ( { className } ) => {
+  const { user } = useContext(UserDataContext);
+
   // These handle showing the drop down.
   const [show, setShow] = useState(false);
   const toggleDropdown = () => setShow(!show);
@@ -10,6 +14,15 @@ const FriendsButton = ( { className } ) => {
   //State for Friend Input
   const [friendEmailInput, setFriendEmailInput] = useState('');
 
+  //Function for submitting friend request
+  const sendFriendRequest = (event) => {
+    event.preventDefault();
+    postToServer({
+      bodyData: { requestedFriend: friendEmailInput },
+      linkExtender: `/api/user-data/${user.id}/friends/requests`
+    });
+
+  }
 
   return (
     <>
@@ -41,7 +54,7 @@ const FriendsButton = ( { className } ) => {
             <Tab eventKey="requests" title="Requests">hi</Tab> 
           </Tabs>
           <Dropdown.Divider />
-          <form>
+          <form onSubmit={(e) => sendFriendRequest(e)}>
             <input className={styles.FriendEmailInput}
             placeholder="Friend's Email"
             value={friendEmailInput}

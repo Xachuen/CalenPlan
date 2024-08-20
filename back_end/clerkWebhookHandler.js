@@ -155,6 +155,7 @@ app.post('/api/user-data', async (req, res) => {
             user_id: userId,
             user_email: userEmail,
             friends: [],
+            friend_requests: [],
             active: true,
             calendar_data: {}
         });
@@ -165,6 +166,32 @@ app.post('/api/user-data', async (req, res) => {
     res.json(userData)
 });
 
+app.post('/api/user-data/:userId/friends/requests', async (req, res) => {
+  const { requestedFriend} = req.body;
+  const { userId } = req.params; 
+  const { userDataCollection } = await connectToDatabase();
+
+  console.log("hello world");
+
+  try {
+    console.log("marco");
+    const result = await userDataCollection.updateOne(
+      { user_email: requestedFriend },
+      {
+        $addToSet: { friend_requests: userId }
+      }
+    );
+
+    if (result.matchedCount > 0) {
+      res.json({ message: 'Friend request sent successfully' });
+    } else {
+      console.log("Could not find anything");
+    }
+  } catch (error) {
+    console.error('Error sending friend request:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 // Start the server on port 3000
 app.listen(3000, () => {

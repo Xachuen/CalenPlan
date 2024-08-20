@@ -46,6 +46,7 @@ export const postToServer = async ( { bodyData, linkExtender = '/api/user-data',
     }); 
   
     if (!response.ok) {
+      console.error('Failed response:', response);
       throw new Error('Failed to post calendar data');
     }
 
