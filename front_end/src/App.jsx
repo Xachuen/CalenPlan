@@ -16,7 +16,7 @@ function App() {
   const { isSignedIn, user, isLoaded } = useUser();
   const [displayMonth, setDisplayMonth] = useState(new Date());
   const [eventsData, setEventsData] = useState({});
-  const [ userData, setUserData ] = useState({ isSignedIn, user, isLoaded });
+  const [ userData, setUserData ] = useState({ isSignedIn, user, isLoaded, friendsList: [], friendRequests: [] });
 
   useEffect(() => {
     if (user && isSignedIn && isLoaded) {
@@ -24,7 +24,6 @@ function App() {
       // If the user is signed in, we want to get the data from
       // the database.
       console.log(`setting user to: ${user.id}`);
-      setUserData({ isSignedIn, user, isLoaded });
       
       console.log(user);
       const fetchData = async () => {
@@ -38,6 +37,7 @@ function App() {
           });
           
           if (responseData) {
+            setUserData({ isSignedIn, user, isLoaded, friendsList: responseData.friends, friendRequests: responseData.friend_requests })
             setEventsData(responseData.calendar_data);
           }
         } catch (error) {

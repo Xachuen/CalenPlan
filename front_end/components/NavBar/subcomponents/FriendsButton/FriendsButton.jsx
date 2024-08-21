@@ -6,7 +6,7 @@ import { UserDataContext } from '../../../../src/App';
 import FriendRequest from '../FriendRequest/FriendRequest';
 
 const FriendsButton = ( { className } ) => {
-  const { user } = useContext(UserDataContext);
+  const { user, friendRequests, friendsList } = useContext(UserDataContext);
 
   // These handle showing the drop down.
   const [show, setShow] = useState(false);
@@ -19,7 +19,7 @@ const FriendsButton = ( { className } ) => {
   const sendFriendRequest = (event) => {
     event.preventDefault();
     postToServer({
-      bodyData: { requestedFriend: friendEmailInput },
+      bodyData: { requestedFriend: friendEmailInput, userEmail: user.primaryEmailAddress.emailAddress },
       linkExtender: `/api/user-data/${user.id}/friends/requests`
     });
 
@@ -54,7 +54,11 @@ const FriendsButton = ( { className } ) => {
             </Tab> 
             <Tab eventKey="requests" title="Requests">
               <div className={styles.RequestList}>
-                <FriendRequest/>
+                {
+                  friendRequests.map((requesterEmail) => {
+                    return <FriendRequest key={requesterEmail} requesterEmail={requesterEmail}/>
+                  })
+                }
               </div>   
             </Tab> 
           </Tabs>

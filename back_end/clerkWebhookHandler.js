@@ -166,9 +166,10 @@ app.post('/api/user-data', async (req, res) => {
     res.json(userData)
 });
 
+
+// Handling Friend Requests
 app.post('/api/user-data/:userId/friends/requests', async (req, res) => {
-  const { requestedFriend} = req.body;
-  const { userId } = req.params; 
+  const { userEmail, requestedFriend} = req.body;
   const { userDataCollection } = await connectToDatabase();
 
 
@@ -176,7 +177,7 @@ app.post('/api/user-data/:userId/friends/requests', async (req, res) => {
     const result = await userDataCollection.updateOne(
       { user_email: requestedFriend },
       {
-        $addToSet: { friend_requests: userId }
+        $addToSet: { friend_requests: userEmail }
       }
     );
 
@@ -190,6 +191,36 @@ app.post('/api/user-data/:userId/friends/requests', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+
+app.post('/api/user-data/:userId/friends/requests/accept', async (req, res) => {
+    const { accepterEmail, requesterEmail } = req.body;
+    const { userDataCollection } = await connectToDatabase();
+
+    // When the user accepts the friend request, the database updates for both the requester and the accepter.
+    try {
+        const accepterResult = await userDataCollection.updateOne(
+            { user_email: accepterEmail },
+            {
+                $addToSet: { friends: requesterEmail },
+                $pull: { friend_requests: requesterEmail }
+            }
+        )
+
+        const requesterResult = await userDataCollection.updateOne(
+            { user_email: requesterEmail },
+            {
+                $addToSet: { friends: accepterEmail},
+                $pull: { friend_requests: accepterEmail }
+            }
+        )
+        console.log("Success! Added friends.")
+    } catch (error) {
+    console.error('Error accepting friend request:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 // Start the server on port 3000
 app.listen(3000, () => {
