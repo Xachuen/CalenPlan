@@ -2,11 +2,12 @@ import React, {useContext, useState} from 'react';
 
 import styles from './FriendRequest.module.css';
 import { postToServer } from '../../../../utils/dataBaseUtils';
-import { UserDataContext } from '../../../../src/App';
+import { FriendsContext, UserDataContext } from '../../../../src/App';
+import { shortenEmail } from '../../../../utils/friendUtils';
 
 const FriendRequest = ( { requesterEmail } ) => {
   const { user } = useContext(UserDataContext);
-
+  const { localFriendRequests, localFriendsList, setLocalFriendRequests, setLocalFriendsList } = useContext(FriendsContext);
   const [ acceptReject, setAcceptReject ] = useState('');
   const submitFriendRequest = (event) => {
     event.preventDefault();
@@ -16,20 +17,22 @@ const FriendRequest = ( { requesterEmail } ) => {
         bodyData: {accepterEmail: user.primaryEmailAddress.emailAddress, requesterEmail: requesterEmail },
         linkExtender: '/api/user-data/:userId/friends/requests/accept'
       } )
+      setLocalFriendRequests(localFriendRequests.filter( (friendRequest) => friendRequest !== requesterEmail ))
+      setLocalFriendsList([...localFriendsList, requesterEmail]); 
     }
     else if (acceptReject === 'reject') {
       postToServer( {
-        bodyData: {rejecterId: user.id, requesterEmail: requesterEmail },
+        bodyData: {rejecterEmail: user.primaryEmailAddress.emailAddress, requesterEmail: requesterEmail },
         linkExtender: '/api/user-data/:userId/friends/requests/reject'
       } )
+      setLocalFriendRequests(localFriendRequests.filter( (friendRequest) => friendRequest !== requesterEmail ))
     }
 
   }
 
   return ( 
     <form className={styles.FriendRequest} onSubmit={submitFriendRequest}>
-      {/* TODO: replace with friendEmail variable */}
-      <p className={styles.FriendEmail}>{requesterEmail}</p>
+      <p className={styles.FriendEmail}>{shortenEmail(requesterEmail)}</p>
       <div>
         <button 
         className={styles.AddButton}

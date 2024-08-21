@@ -221,6 +221,32 @@ app.post('/api/user-data/:userId/friends/requests/accept', async (req, res) => {
   }
 });
 
+app.post('/api/user-data/:userId/friends/requests/reject', async (req, res) => {
+    const { rejecterEmail, requesterEmail } = req.body;
+    const { userDataCollection } = await connectToDatabase();
+
+    // When the user accepts the friend request, the database updates for both the requester and the accepter.
+    try {
+        const rejecterResult = await userDataCollection.updateOne(
+            { user_email: rejecterEmail },
+            {
+                $pull: { friend_requests: requesterEmail }
+            }
+        )
+
+        const requesterResult = await userDataCollection.updateOne(
+            { user_email: requesterEmail },
+            {
+                $pull: { friend_requests: rejecterEmail }
+            }
+        )
+        console.log("Success! Reject friend.")
+
+    } catch (error) {
+    console.error('Error accepting friend request:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 // Start the server on port 3000
 app.listen(3000, () => {

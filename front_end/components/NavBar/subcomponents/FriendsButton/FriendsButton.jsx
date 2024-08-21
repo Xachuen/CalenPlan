@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react';
 import { Dropdown, Tab, Tabs } from 'react-bootstrap';
 import styles from './FriendsButton.module.css';
 import { postToServer} from '../../../../utils/dataBaseUtils';
-import { UserDataContext } from '../../../../src/App';
+import { FriendsContext, UserDataContext } from '../../../../src/App';
 import FriendRequest from '../FriendRequest/FriendRequest';
+import FriendLabel from '../FriendLabel/FriendLabel';
 
 const FriendsButton = ( { className } ) => {
-  const { user, friendRequests, friendsList } = useContext(UserDataContext);
+  const { user } = useContext(UserDataContext);
+  const { localFriendsList, localFriendRequests } = useContext(FriendsContext);
 
   // These handle showing the drop down.
   const [show, setShow] = useState(false);
@@ -41,21 +43,17 @@ const FriendsButton = ( { className } ) => {
           >
             <Tab eventKey="friends" title="Friends">
               <div className={styles.FriendsList}>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
-                <Dropdown.Item href="#/action-1">Friend</Dropdown.Item>
+                {
+                  localFriendsList.map((friendEmail) => {
+                    return <FriendLabel key={friendEmail} friendEmail={friendEmail}/>
+                  })
+                }
               </div>
             </Tab> 
             <Tab eventKey="requests" title="Requests">
               <div className={styles.RequestList}>
                 {
-                  friendRequests.map((requesterEmail) => {
+                  localFriendRequests.map((requesterEmail) => {
                     return <FriendRequest key={requesterEmail} requesterEmail={requesterEmail}/>
                   })
                 }

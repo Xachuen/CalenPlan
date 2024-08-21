@@ -11,12 +11,17 @@ import { getFromServer, postToServer, putInServer } from '../utils/dataBaseUtils
 export const DisplayMonthContext = createContext();
 export const EventsDataContext = createContext();
 export const UserDataContext = createContext();
+export const FriendsContext = createContext();
 
 function App() {
   const { isSignedIn, user, isLoaded } = useUser();
+  
+
   const [displayMonth, setDisplayMonth] = useState(new Date());
   const [eventsData, setEventsData] = useState({});
   const [ userData, setUserData ] = useState({ isSignedIn, user, isLoaded, friendsList: [], friendRequests: [] });
+  const [ localFriendsList, setLocalFriendsList ] = useState([]);
+  const [ localFriendRequests, setLocalFriendRequests ] = useState([]);
 
   useEffect(() => {
     if (user && isSignedIn && isLoaded) {
@@ -37,8 +42,12 @@ function App() {
           });
           
           if (responseData) {
-            setUserData({ isSignedIn, user, isLoaded, friendsList: responseData.friends, friendRequests: responseData.friend_requests })
+            setUserData({ isSignedIn, user, isLoaded })
             setEventsData(responseData.calendar_data);
+
+            setLocalFriendsList(responseData.friends);
+            setLocalFriendRequests(responseData.friend_requests);
+
           }
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -57,14 +66,16 @@ function App() {
   return (
     <>
       <Router>
-        <UserDataContext.Provider value={userData}>
-          <EventsDataContext.Provider value={ { eventsData, setEventsData } }>
-            <DisplayMonthContext.Provider value={ { displayMonth, setDisplayMonth } }>
-              <NavBar/>
-              <MainHolder/>
-            </DisplayMonthContext.Provider>
-          </EventsDataContext.Provider>
-        </UserDataContext.Provider>
+        <FriendsContext.Provider value={ { localFriendsList, setLocalFriendsList, localFriendRequests, setLocalFriendRequests  } }> 
+          <UserDataContext.Provider value={userData}>
+            <EventsDataContext.Provider value={ { eventsData, setEventsData } }>
+              <DisplayMonthContext.Provider value={ { displayMonth, setDisplayMonth } }>
+                <NavBar/>
+                <MainHolder/>
+              </DisplayMonthContext.Provider>
+            </EventsDataContext.Provider>
+          </UserDataContext.Provider>
+        </FriendsContext.Provider>
       </Router>
     </>
   )
