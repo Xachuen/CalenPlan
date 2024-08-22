@@ -3,16 +3,20 @@ import React, { useContext } from 'react';
 import styles from './FriendLabel.module.css';
 import { shortenEmail } from '../../../../utils/friendUtils';
 import { postToServer } from '../../../../utils/dataBaseUtils';
-import { UserDataContext } from '../../../../src/App';
+import { FriendsContext, UserDataContext } from '../../../../src/App';
 
 const FriendLabel = ( { friendEmail } ) => {
   const { user } = useContext(UserDataContext);
+  const { localFriendsList, setLocalFriendsList, localFriendRequests, setLocalFriendRequests  } = useContext(FriendsContext);
 
   const deleteFriend = () => {
     postToServer( {
       bodyData: { deletedFriendEmail: friendEmail, userEmail: user.primaryEmailAddress.emailAddress },
-      linkExtender: '/'
+      linkExtender: '/api/user-data/:userId/friends/delete/'
     } )
+    
+    // Handle friends locally
+    setLocalFriendsList(localFriendsList.filter( (listedFriendEmail) => listedFriendEmail !== friendEmail));
   }
 
   return (

@@ -225,7 +225,7 @@ app.post('/api/user-data/:userId/friends/requests/reject', async (req, res) => {
     const { rejecterEmail, requesterEmail } = req.body;
     const { userDataCollection } = await connectToDatabase();
 
-    // When the user accepts the friend request, the database updates for both the requester and the accepter.
+    // When the user rejects the friend request, the database updates for both the requester and the accepter.
     try {
         const rejecterResult = await userDataCollection.updateOne(
             { user_email: rejecterEmail },
@@ -243,10 +243,38 @@ app.post('/api/user-data/:userId/friends/requests/reject', async (req, res) => {
         console.log("Success! Reject friend.")
 
     } catch (error) {
-    console.error('Error accepting friend request:', error);
+    console.error('Error rejecting friend request:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+app.post('/api/user-data/:userId/friends/delete', async (req, res) => {
+    const { deletedFriendEmail, userEmail } = req.body;
+    const { userDataCollection } = await connectToDatabase();
+
+    // When the user rejects the friend request, the database updates for both the requester and the accepter.
+    try {
+        const userResult = await userDataCollection.updateOne(
+            { user_email: userEmail },
+            {
+                $pull: { friends: deletedFriendEmail }
+            }
+        )
+
+        const friendResult = await userDataCollection.updateOne(
+            { user_email: deletedFriendEmail },
+            {
+                $pull: { friends: userEmail }
+            }
+        )
+        console.log("Success! Deleted friend.")
+
+    } catch (error) {
+    console.error('Error deleting friend.:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 // Start the server on port 3000
 app.listen(3000, () => {
