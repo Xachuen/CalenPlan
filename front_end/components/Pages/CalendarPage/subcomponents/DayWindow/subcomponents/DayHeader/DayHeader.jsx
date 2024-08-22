@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { getMinutesAway } from '../../../../../../../utils/dateUtils';
 
-import { Modal, Button, Dropdown } from 'react-bootstrap';
+import { Modal, Button, Dropdown, FormControl, InputGroup } from 'react-bootstrap';
 
 import { UserDataContext } from '../../../../../../../src/App';
 import { putInServer } from '../../../../../../../utils/dataBaseUtils.js';
@@ -40,6 +40,8 @@ const DayHeader = () => {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
+
+  
 
   const submitEventCreation = async (event) => {
     event.preventDefault();
@@ -97,6 +99,35 @@ const DayHeader = () => {
   /* Event description */
   const [ eventDescription, setEventDescription ] = useState('');
 
+  /* Searched Address */
+  const [ searchedAddress, setSearchedAddress ] = useState('');
+  const [ searchResults, setSearchResults ] = useState([]);
+  const [ showDropDown, setShowDropDown ] = useState(false);
+
+  const searchAddressCompletion = (event) => {
+    setSearchedAddress(event.target.value);
+    if (event.target.value) {
+      results = fetchSuggestions(event.target.value);
+      setSearchResults(results);
+    }
+  }
+  
+
+  const fetchSuggestions = (searchTerm) => {
+    // Example call to Mapbox API or any other API
+    const accessToken = import.meta.env.VITE_MAPBOX_KEY;
+    const url = `https://api.mapbox.com/search/searchbox/v1/suggest?q=${searchQuery}&access_token=YOUR_MAPBOX_ACCESS_TOKEN&session_token=${sessionToken}`;
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        searchResults(data.suggestions || []);
+        setShowDropDown(true);
+      })
+      .catch(error => {
+        console.error('Error fetching suggestions:', error);
+      });
+  };
+  
   return (
     <>
       <div className={styles.DayHeader}>
@@ -161,6 +192,24 @@ const DayHeader = () => {
                 min={selectedStartTime}
                 onChange={(event)=>{setSelectedEndTime(event.target.value)}}/>
               
+            </div>
+         
+            <div className={styles.EventCreationElement}>
+              <span>Address: </span>
+              <div className={styles.AddressInput}>
+                <input
+                type="text"
+                value={searchedAddress}
+                onChange={(event)=>{searchAddressCompletion(event)}}
+                />
+                <ul className={styles.AddressSuggestions}>
+                  <li>Place</li>
+                  <li>Place</li>
+                  <li>Place</li>
+                  <li>Place</li>
+                </ul>
+              </div>
+
             </div>
                   
             <div className={styles.EventCreationElement}>

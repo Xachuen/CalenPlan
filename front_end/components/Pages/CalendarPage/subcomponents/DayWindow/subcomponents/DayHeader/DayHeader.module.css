@@ -69,3 +69,22 @@
     padding: 0.7rem;
     border-radius: 20px;
 }
+
+.AddressInput {
+    display: inline-block;
+    position: relative;
+}
+
+.AddressSuggestions {
+    background-color: white;
+    border-color: rgb(219, 219, 219);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border-style: solid;
+    list-style-type: none;
+    padding: 0.5rem;
+    border-width: 0.1px;
+    margin: 0;
+}
