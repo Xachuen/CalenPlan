@@ -3,6 +3,8 @@ import React, { useContext, useState } from 'react';
 import styles from './DayHeader.module.css';
 import { DisplayMonthContext, EventsDataContext } from '../../../../../../../src/App';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { weekdayName } from '../../../../../../../utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
 
@@ -100,32 +102,49 @@ const DayHeader = () => {
   const [ eventDescription, setEventDescription ] = useState('');
 
   /* Searched Address */
+  const [ searchSession, setSearchSession ] = useState('');
   const [ searchedAddress, setSearchedAddress ] = useState('');
   const [ searchResults, setSearchResults ] = useState([]);
   const [ showDropDown, setShowDropDown ] = useState(false);
 
-  const searchAddressCompletion = (event) => {
+  const generateSession = () => {
+    if (!searchSession) {
+
+      const newSessionToken = uuidv4();
+      console.log(newSessionToken);
+      setSearchSession(newSessionToken);
+     
+    }
+  }
+
+  const searchAddressCompletion = async (event) => {
     setSearchedAddress(event.target.value);
     if (event.target.value) {
-      results = fetchSuggestions(event.target.value);
+      const results = await fetchSuggestions(event.target.value);
+      console.log(results)
       setSearchResults(results);
     }
   }
   
 
-  const fetchSuggestions = (searchTerm) => {
+  const fetchSuggestions = async (searchTerm) => {
     // Example call to Mapbox API or any other API
     const accessToken = import.meta.env.VITE_MAPBOX_KEY;
-    const url = `https://api.mapbox.com/search/searchbox/v1/suggest?q=${searchQuery}&access_token=YOUR_MAPBOX_ACCESS_TOKEN&session_token=${sessionToken}`;
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        searchResults(data.suggestions || []);
-        setShowDropDown(true);
-      })
-      .catch(error => {
-        console.error('Error fetching suggestions:', error);
-      });
+    const url = `https://api.mapbox.com/search/searchbox/v1/suggest?q=${searchTerm}&access_token=${accessToken}&session_token=${searchSession}`;
+    
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      setShowDropDown(true);
+
+      return data.suggestions || [];
+
+    } catch {
+      console.log("Can not retrieve from API.");
+      return [];
+    }
+    
   };
   
   return (
@@ -201,12 +220,14 @@ const DayHeader = () => {
                 type="text"
                 value={searchedAddress}
                 onChange={(event)=>{searchAddressCompletion(event)}}
+                onFocus={(event)=>{generateSession(event)}}
                 />
                 <ul className={styles.AddressSuggestions}>
-                  <li>Place</li>
-                  <li>Place</li>
-                  <li>Place</li>
-                  <li>Place</li>
+                  {searchResults.map(
+                    (placeObj) => {
+                      return <li key={placeObj.mapbox_id}>{placeObj.address}</li>
+                    })
+                  }
                 </ul>
               </div>
 

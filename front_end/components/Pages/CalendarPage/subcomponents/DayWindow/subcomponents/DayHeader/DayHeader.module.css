@@ -88,3 +88,7 @@
     border-width: 0.1px;
     margin: 0;
 }
+
+.AddressSuggestions li:hover {
+    background-color: rgb(185, 185, 185);
+}
