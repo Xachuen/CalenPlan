@@ -40,7 +40,15 @@ const DayHeader = () => {
   
   /* Modal handler */
   const [showModal, setShowModal] = useState(false);
-  const handleClose = () => setShowModal(false);
+  const handleClose = () => {
+    setShowModal(false);
+    setSearchSession('');
+    setSearchedAddress('');
+    setShowDropDown(false);
+    setSelectedAddress('');
+    setSearchResults([]);
+  };
+
   const handleShow = () => setShowModal(true);
 
   
@@ -58,9 +66,6 @@ const DayHeader = () => {
     const [hour] = selectedStartTime.split(':');
     const hourNumber = parseInt(hour, 10);
     
-    console.log(selectedAddress)
-    console.log(selectedAddress.mapbox_id)
-
     const updatedEventsData = {
       ...eventsData,
       [date_id]: {
@@ -76,7 +81,8 @@ const DayHeader = () => {
                   eventName: eventName,
                   eventDescription: eventDescription,
                   eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`,
-                  address: await fetchGeometry(selectedAddress.mapbox_id)
+                  addressText: selectedAddress ?  selectedAddress.address : '',
+                  addressCoords: selectedAddress ?  await fetchGeocodingData(selectedAddress.address) : ''
               }
     ]}};
 
@@ -134,16 +140,23 @@ const DayHeader = () => {
     }
   }
   
-const fetchGeometry = async (mapboxId) => {
+const fetchGeocodingData = async (address) => {
   const accessToken = import.meta.env.VITE_MAPBOX_KEY;
-  const url = `https://api.mapbox.com/search/searchbox/v1/retrieve?mapbox_id=${mapboxId}&access_token=${accessToken}`;
+  const url = `https://api.mapbox.com/search/geocode/v6/forward?q=${encodeURIComponent(address)}&access_token=${accessToken}`;
 
   try {
     const response = await fetch(url);
     const data = await response.json();
-    return data.features[0].geometry.coordinates; // Assuming you get the correct feature and it has coordinates
-  } catch {
-    console.log("Cannot retrieve geometry from API.");
+
+    if (data.features && data.features.length > 0) {
+      const coordinates = data.features[0].geometry.coordinates;
+      return coordinates;
+    } else {
+      console.log('No results found for the address.');
+      return null;
+    }
+  } catch (error) {
+    console.log("Cannot retrieve geocoding data from API.", error);
     return null;
   }
 };

@@ -28,6 +28,8 @@ const DayRow = ( { hour, strRep, hourLabel, timeDivide }) => {
            eventName={dateEventObj.eventName}
            eventTime={dateEventObj.eventTime}
            eventDescription={dateEventObj.eventDescription}
+           eventAddress={dateEventObj.addressText}
+           eventCoordinates={dateEventObj.addressCoords}
            />
           })
         }

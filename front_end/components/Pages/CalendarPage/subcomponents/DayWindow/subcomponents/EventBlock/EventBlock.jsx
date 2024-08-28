@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styles from './EventBlock.module.css';
 import { Modal } from 'react-bootstrap';
 
-const EventBlock = ( { eventName, eventDescription, eventTime, minuteLength, minuteStart } ) => {
+const EventBlock = ( { eventName, eventDescription, eventTime, minuteLength, minuteStart, eventAddress, eventCoordinates } ) => {
   // States  
   const [ showModal, setShowModal ] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -15,7 +15,10 @@ const EventBlock = ( { eventName, eventDescription, eventTime, minuteLength, min
         <Modal.Header closeButton>
           <div className={`${styles.TitleContainer}`}>
             <h3 className={`${styles.EventNameModal}`}>{eventName}</h3>
-            <p className={`${styles.EventTimeModal}`}>{eventTime}</p>
+            <div className={styles.EventDescriptors}>
+              <p className={`${styles.EventTimeModal}`}>{eventTime}</p>
+              <p className={styles.EventAddressModal}>{eventAddress}</p>
+            </div>
           </div>
         </Modal.Header>
         <Modal.Body>

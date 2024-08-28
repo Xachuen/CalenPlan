@@ -1,6 +1,15 @@
+// Sockets
+
+// Environment
 import { config } from 'dotenv';
+
+// Socket
 import express from "express";
+
+//Svix
 import { Webhook } from "svix";
+
+// Json Parser
 import bodyParser from "body-parser";
 
 //Allow requests from different ports.
