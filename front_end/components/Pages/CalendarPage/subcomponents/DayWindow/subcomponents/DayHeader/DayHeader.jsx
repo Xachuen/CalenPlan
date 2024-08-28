@@ -58,6 +58,9 @@ const DayHeader = () => {
     const [hour] = selectedStartTime.split(':');
     const hourNumber = parseInt(hour, 10);
     
+    console.log(selectedAddress)
+    console.log(selectedAddress.mapbox_id)
+
     const updatedEventsData = {
       ...eventsData,
       [date_id]: {
@@ -73,6 +76,7 @@ const DayHeader = () => {
                   eventName: eventName,
                   eventDescription: eventDescription,
                   eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`,
+                  address: await fetchGeometry(selectedAddress.mapbox_id)
               }
     ]}};
 
@@ -105,6 +109,7 @@ const DayHeader = () => {
   const [ searchSession, setSearchSession ] = useState('');
   const [ searchedAddress, setSearchedAddress ] = useState('');
   const [ searchResults, setSearchResults ] = useState([]);
+  const [ selectedAddress, setSelectedAddress ] = useState('');
   const [ showDropDown, setShowDropDown ] = useState(false);
 
   const generateSession = () => {
@@ -118,25 +123,40 @@ const DayHeader = () => {
   }
 
   const searchAddressCompletion = async (event) => {
+    setSelectedAddress('');
     setSearchedAddress(event.target.value);
     if (event.target.value) {
       const results = await fetchSuggestions(event.target.value);
-      console.log(results)
+      if (results.length > 0) {
+        setShowDropDown(true);
+      }
       setSearchResults(results);
     }
   }
   
+const fetchGeometry = async (mapboxId) => {
+  const accessToken = import.meta.env.VITE_MAPBOX_KEY;
+  const url = `https://api.mapbox.com/search/searchbox/v1/retrieve?mapbox_id=${mapboxId}&access_token=${accessToken}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.features[0].geometry.coordinates; // Assuming you get the correct feature and it has coordinates
+  } catch {
+    console.log("Cannot retrieve geometry from API.");
+    return null;
+  }
+};
 
   const fetchSuggestions = async (searchTerm) => {
     // Example call to Mapbox API or any other API
     const accessToken = import.meta.env.VITE_MAPBOX_KEY;
-    const url = `https://api.mapbox.com/search/searchbox/v1/suggest?q=${searchTerm}&access_token=${accessToken}&session_token=${searchSession}`;
+    const url = `https://api.mapbox.com/search/searchbox/v1/suggest?q=${encodeURIComponent(searchTerm)}&access_token=${accessToken}&session_token=${searchSession}&types=address`;
+
     
     try {
       const response = await fetch(url);
       const data = await response.json();
-
-      setShowDropDown(true);
 
       return data.suggestions || [];
 
@@ -147,6 +167,22 @@ const DayHeader = () => {
     
   };
   
+  const clickAddress = (addressObj) => {
+    setSearchedAddress(addressObj.address);
+    console.log(addressObj);
+
+    setSelectedAddress(addressObj);
+    setSearchResults([]);
+
+  }
+
+  const blurAddressInput = () => {
+    setTimeout(() => {
+      setSearchResults([]);
+      setShowDropDown(false);
+    }, 100);
+  };
+
   return (
     <>
       <div className={styles.DayHeader}>
@@ -220,15 +256,16 @@ const DayHeader = () => {
                 type="text"
                 value={searchedAddress}
                 onChange={(event)=>{searchAddressCompletion(event)}}
-                onFocus={(event)=>{generateSession(event)}}
+                onFocus={()=> generateSession()}
+                onBlur={blurAddressInput}
                 />
-                <ul className={styles.AddressSuggestions}>
+                { showDropDown && <ul className={styles.AddressSuggestions}>
                   {searchResults.map(
                     (placeObj) => {
-                      return <li key={placeObj.mapbox_id}>{placeObj.address}</li>
+                      return <li key={placeObj.mapbox_id} onClick={() => clickAddress(placeObj)}>{placeObj.address}</li>
                     })
                   }
-                </ul>
+                </ul> }
               </div>
 
             </div>
