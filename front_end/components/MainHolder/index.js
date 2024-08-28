@@ -1,1 +1,1 @@
-export * from './MainHolder';
+export * from "./MainHolder";

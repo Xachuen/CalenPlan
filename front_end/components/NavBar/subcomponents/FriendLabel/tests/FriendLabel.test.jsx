@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {FriendLabel} from '../FriendLabel';
+import { FriendLabel } from "../FriendLabel";
 
-describe('<FriendLabel />', () => {});
+describe("<FriendLabel />", () => {});

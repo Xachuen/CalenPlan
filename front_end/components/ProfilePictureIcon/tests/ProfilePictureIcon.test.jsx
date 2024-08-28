@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {ProfilePictureIcon} from '../ProfilePictureIcon';
+import { ProfilePictureIcon } from "../ProfilePictureIcon";
 
-describe('<ProfilePictureIcon />', () => {});
+describe("<ProfilePictureIcon />", () => {});

@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {MainHolder} from '../MainHolder';
+import { MainHolder } from "../MainHolder";
 
-describe('<MainHolder />', () => {});
+describe("<MainHolder />", () => {});

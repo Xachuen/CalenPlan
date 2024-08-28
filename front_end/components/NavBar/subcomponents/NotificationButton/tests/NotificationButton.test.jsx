@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {NotificationButton} from '../NotificationButton';
+import { NotificationButton } from "../NotificationButton";
 
-describe('<NotificationButton />', () => {});
+describe("<NotificationButton />", () => {});

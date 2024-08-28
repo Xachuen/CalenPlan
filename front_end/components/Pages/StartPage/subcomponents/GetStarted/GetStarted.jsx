@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import styles from './GetStarted.module.css';
+import styles from "./GetStarted.module.css";
 
 const GetStarted = () => {
-  return ( 
+  return (
     <>
       <button className={styles.GetStarted}>Get Started</button>
     </>
-   );
-}
- 
+  );
+};
+
 export default GetStarted;

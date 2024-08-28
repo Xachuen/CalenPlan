@@ -1,1 +1,1 @@
-export * from './ProfilePictureIcon';
+export * from "./ProfilePictureIcon";

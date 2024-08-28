@@ -1,1 +1,1 @@
-export * from './SeperatorBar';
+export * from "./SeperatorBar";

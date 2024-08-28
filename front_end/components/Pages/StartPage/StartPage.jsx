@@ -1,17 +1,23 @@
-import React from 'react';
-import styles from './StartPage.module.css';
+import React from "react";
+import styles from "./StartPage.module.css";
 
-import Logo from '../../Logo/Logo';
-import GetStarted from './subcomponents/GetStarted/GetStarted';
+import Logo from "../../Logo/Logo";
+import GetStarted from "./subcomponents/GetStarted/GetStarted";
 
-import { SignedOut, SignedIn, SignOutButton, SignInButton } from '@clerk/clerk-react';
+import {
+  SignedOut,
+  SignedIn,
+  SignOutButton,
+  SignInButton,
+} from "@clerk/clerk-react";
 
 const StartPage = () => {
-  return ( 
+  return (
     <div className={styles.StartPage}>
-      <Logo className={styles.LogoStartPage}/>
-      <p className={styles.StartPageParagraph}>Welcome the CalenPlan, to calendar app to plan with you friends!
-        Get started by signing in and invite friends to start planning!
+      <Logo className={styles.LogoStartPage} />
+      <p className={styles.StartPageParagraph}>
+        Welcome the CalenPlan, to calendar app to plan with you friends! Get
+        started by signing in and invite friends to start planning!
       </p>
       <SignedOut>
         <SignInButton>
@@ -24,7 +30,7 @@ const StartPage = () => {
         <SignOutButton />
       </SignedIn>
     </div>
-   );
-}
- 
+  );
+};
+
 export default StartPage;

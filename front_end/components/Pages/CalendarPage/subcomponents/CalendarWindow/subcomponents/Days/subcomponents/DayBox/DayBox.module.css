@@ -1,73 +1,71 @@
 .DayBox {
-    background-color: #6A6D88;
-    height: 90%;
-    width: 90%;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    position: relative;
-    border: 3px solid transparent; /* Set default border size */
+  background-color: #6a6d88;
+  height: 90%;
+  width: 90%;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  position: relative;
+  border: 3px solid transparent; /* Set default border size */
 
-    -webkit-user-select: none;        
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .DayBox:hover {
-    border-color: white;
-    border-style: solid;
-    transition: 0.05s;
+  border-color: white;
+  border-style: solid;
+  transition: 0.05s;
 }
 
 .CircleIcon {
-    height: 0.6rem;
-    width: 0.6rem;
-    position: absolute;
-    top: 4.6rem;
-    background-color: white;
-    border-radius: 50%;
-    
+  height: 0.6rem;
+  width: 0.6rem;
+  position: absolute;
+  top: 4.6rem;
+  background-color: white;
+  border-radius: 50%;
 }
 
 .faded {
-    color: #C1C1C1;
-    background-color: #5B5E76;
+  color: #c1c1c1;
+  background-color: #5b5e76;
 }
 
 .full {
-    color: white;
-    background-color: #6A6D88;
+  color: white;
+  background-color: #6a6d88;
 }
 
-.CurrentDay{
-    border-color: #b5bae7;
-    border-style: solid;
+.CurrentDay {
+  border-color: #b5bae7;
+  border-style: solid;
 }
 
 .notification {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #F46969;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    transform: translate(25%, -20%);}
-
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #f46969;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  transform: translate(25%, -20%);
+}
 
 .DayBox:hover .notification {
-    background-color: #e05b5b;
-    transition: 0.2s;
+  background-color: #e05b5b;
+  transition: 0.2s;
 }

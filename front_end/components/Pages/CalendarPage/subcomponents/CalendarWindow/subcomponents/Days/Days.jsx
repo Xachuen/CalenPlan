@@ -1,10 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from "react";
 
-import styles from './Days.module.css';
-import DayBox from './subcomponents/DayBox/DayBox';
+import styles from "./Days.module.css";
+import DayBox from "./subcomponents/DayBox/DayBox";
 
-import { DisplayMonthContext } from '../../../../../../../src/App';
-import { getNextMonth, getPastMonth, getDaysOfMonth, getWeekday, areDatesEqual } from '../../../../../../../utils/dateUtils';
+import { DisplayMonthContext } from "../../../../../../../src/App";
+import {
+  getNextMonth,
+  getPastMonth,
+  getDaysOfMonth,
+  getWeekday,
+  areDatesEqual,
+} from "../../../../../../../utils/dateUtils";
 
 const Days = () => {
   const [dayData, setDayData] = useState([]);
@@ -12,7 +18,7 @@ const Days = () => {
   const maxDays = 42; // The number of boxes listed on the calendar.
 
   const { displayMonth: currentDate } = useContext(DisplayMonthContext);
-  
+
   const generateDayData = (start, end, year, month, colorDisplay, today) => {
     const dayDataArray = [];
     for (let i = start; i <= end; i++) {
@@ -23,12 +29,11 @@ const Days = () => {
         date_id,
         dayNumber: i,
         colorDisplay,
-        isCurrentDay: areDatesEqual(today, date_obj)
+        isCurrentDay: areDatesEqual(today, date_obj),
       });
     }
     return dayDataArray;
   };
-
 
   useEffect(() => {
     const today = new Date();
@@ -36,7 +41,9 @@ const Days = () => {
     const curYear = currentDate.getFullYear();
     const curMonth = currentDate.getMonth();
 
-    const firstDayOfMonth = getWeekday(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1));
+    const firstDayOfMonth = getWeekday(
+      new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+    );
     const currentMonthDays = getDaysOfMonth(currentDate);
     let newDayData = [];
 
@@ -46,10 +53,21 @@ const Days = () => {
     const prevYear = prevDate.getFullYear();
 
     const prevMonthDays = getDaysOfMonth(prevDate);
-    newDayData.push(...generateDayData(prevMonthDays - firstDayOfMonth + 1, prevMonthDays, prevYear, prevMonth, "faded", today));
+    newDayData.push(
+      ...generateDayData(
+        prevMonthDays - firstDayOfMonth + 1,
+        prevMonthDays,
+        prevYear,
+        prevMonth,
+        "faded",
+        today,
+      ),
+    );
 
     // Create visible days of current month.
-    newDayData.push(...generateDayData(1, currentMonthDays, curYear, curMonth, "full", today));
+    newDayData.push(
+      ...generateDayData(1, currentMonthDays, curYear, curMonth, "full", today),
+    );
 
     const remainingDays = maxDays - newDayData.length;
 
@@ -58,26 +76,30 @@ const Days = () => {
     const nextMonth = nextDate.getMonth();
     const nextYear = nextDate.getFullYear();
 
-    newDayData.push(...generateDayData(1, remainingDays, nextYear, nextMonth, "faded", today));
+    newDayData.push(
+      ...generateDayData(1, remainingDays, nextYear, nextMonth, "faded", today),
+    );
 
     setDayData(newDayData);
   }, [currentDate]);
 
-  return ( 
+  return (
     <>
       {console.log(dayData)}
-      {dayData.map( (dayObject) => {
-        return <DayBox
-        key = {dayObject.date_id}
-        date_id = {dayObject.date_id}
-        dateObj = {dayObject.date_obj}
-        dayNumber={dayObject.dayNumber}
-        colorDisplay={dayObject.colorDisplay}
-        isCurrentDay={dayObject.isCurrentDay}
-        />
+      {dayData.map((dayObject) => {
+        return (
+          <DayBox
+            key={dayObject.date_id}
+            date_id={dayObject.date_id}
+            dateObj={dayObject.date_obj}
+            dayNumber={dayObject.dayNumber}
+            colorDisplay={dayObject.colorDisplay}
+            isCurrentDay={dayObject.isCurrentDay}
+          />
+        );
       })}
     </>
-   );
-}
- 
+  );
+};
+
 export default Days;

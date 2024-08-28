@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {CalendarPage} from '../CalendarPage';
+import { CalendarPage } from "../CalendarPage";
 
-describe('<CalendarPage />', () => {});
+describe("<CalendarPage />", () => {});

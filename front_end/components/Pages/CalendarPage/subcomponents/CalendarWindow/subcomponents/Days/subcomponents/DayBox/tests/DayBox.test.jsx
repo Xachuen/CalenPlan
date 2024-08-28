@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {DayBox} from '../DayBox';
+import { DayBox } from "../DayBox";
 
-describe('<DayBox />', () => {});
+describe("<DayBox />", () => {});

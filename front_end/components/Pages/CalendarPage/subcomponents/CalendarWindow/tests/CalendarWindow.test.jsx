@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {CalendarWindow} from '../CalendarWindow';
+import { CalendarWindow } from "../CalendarWindow";
 
-describe('<CalendarWindow />', () => {});
+describe("<CalendarWindow />", () => {});

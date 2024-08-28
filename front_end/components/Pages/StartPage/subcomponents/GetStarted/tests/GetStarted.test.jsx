@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {GetStarted} from '../GetStarted';
+import { GetStarted } from "../GetStarted";
 
-describe('<GetStarted />', () => {});
+describe("<GetStarted />", () => {});

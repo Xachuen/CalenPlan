@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {SeperatorBar} from '../SeperatorBar';
+import { SeperatorBar } from "../SeperatorBar";
 
-describe('<SeperatorBar />', () => {});
+describe("<SeperatorBar />", () => {});

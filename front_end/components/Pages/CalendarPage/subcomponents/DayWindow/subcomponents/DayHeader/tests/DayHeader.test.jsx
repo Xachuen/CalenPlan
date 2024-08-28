@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {DayHeader} from '../DayHeader';
+import { DayHeader } from "../DayHeader";
 
-describe('<DayHeader />', () => {});
+describe("<DayHeader />", () => {});

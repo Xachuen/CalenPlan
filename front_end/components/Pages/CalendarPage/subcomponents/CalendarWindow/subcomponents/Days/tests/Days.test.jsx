@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {Days} from '../Days';
+import { Days } from "../Days";
 
-describe('<Days />', () => {});
+describe("<Days />", () => {});

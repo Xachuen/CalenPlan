@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {EventBlock} from '../EventBlock';
+import { EventBlock } from "../EventBlock";
 
-describe('<EventBlock />', () => {});
+describe("<EventBlock />", () => {});

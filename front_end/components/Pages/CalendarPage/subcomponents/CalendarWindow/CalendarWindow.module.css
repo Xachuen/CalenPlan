@@ -1,90 +1,94 @@
 :root {
-    --row-size: 7.5rem;
-    --column-size: 7.5rem;
-    --weekday-title-size: 3.3rem;
-    --arrow-size: 4rem;
-    --bar-size: 0.2rem;
-  }
+  --row-size: 7.5rem;
+  --column-size: 7.5rem;
+  --weekday-title-size: 3.3rem;
+  --arrow-size: 4rem;
+  --bar-size: 0.2rem;
+}
 
 .CenterContainer {
-    display: flex;
+  display: flex;
 }
 
 .CalendarRoot {
-    background-color: #4e516a;
-    border-radius: 15px; /* Desired border radius */
-    display: inline-block; /* Adjust as needed */
-    margin: 1rem auto;
-    padding-top: 0.5rem;
-    padding-bottom: 1rem;
+  background-color: #4e516a;
+  border-radius: 15px; /* Desired border radius */
+  display: inline-block; /* Adjust as needed */
+  margin: 1rem auto;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
 }
 
 .CalendarWindow {
-    display: grid;
-    grid-template-rows: var(--weekday-title-size) var(--bar-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size) var(--row-size);
-    grid-template-columns: var(--arrow-size) var(--column-size) var(--column-size) var(--column-size) var(--column-size) var(--column-size) var(--column-size) var(--column-size) var(--arrow-size);
-    border-radius: 10px;
-    margin: 0;
-    padding: 0;
-    place-items: center center;
+  display: grid;
+  grid-template-rows:
+    var(--weekday-title-size) var(--bar-size) var(--row-size) var(--row-size)
+    var(--row-size) var(--row-size) var(--row-size) var(--row-size);
+  grid-template-columns:
+    var(--arrow-size) var(--column-size) var(--column-size) var(--column-size)
+    var(--column-size) var(--column-size) var(--column-size) var(--column-size)
+    var(--arrow-size);
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
+  place-items: center center;
 }
 
 .GridItem {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
-.DayTitle{
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    border-bottom: 2px solid #282a36;
-    padding: 0.5rem;
-    -webkit-user-select: none;        
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.DayTitle {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  border-bottom: 2px solid #282a36;
+  padding: 0.5rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .LeftArrow {
-    height: 100%;
-    grid-row-start: 1;
-    grid-row-end: 9;
-    grid-column-start: 1;
-    grid-column-end: 2;
+  height: 100%;
+  grid-row-start: 1;
+  grid-row-end: 9;
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 .RightArrow {
-    height: 100%;
-    grid-row-start: 1;
-    grid-row-end: 9;
-    grid-column-start: 9;
-    grid-column-end: 10;
+  height: 100%;
+  grid-row-start: 1;
+  grid-row-end: 9;
+  grid-column-start: 9;
+  grid-column-end: 10;
 }
 
 .ArrowButton {
-    width: 100%;
-    width: 3rem;
-    padding: 0.4rem;
-    border-radius: 15px;
+  width: 100%;
+  width: 3rem;
+  padding: 0.4rem;
+  border-radius: 15px;
 }
 
 .ArrowButton:hover {
-    background-color: #44465c;
-    transition: 0.3s;
+  background-color: #44465c;
+  transition: 0.3s;
 }
 
-  
 .ArrowButton:not(:hover) {
-    transition: 0.2s;
-  }
+  transition: 0.2s;
+}
 
 .SeperatorBar {
-    background-color: #282a36;
-    height: 100%;
-    width:  100%;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    grid-column-start: 1;
-    grid-column-end: 10;
+  background-color: #282a36;
+  height: 100%;
+  width: 100%;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 10;
 }

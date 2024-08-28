@@ -2,7 +2,7 @@
   width: 8rem;
   padding: 1rem;
   margin: 0 auto;
-  background-color: #2C2F48;
+  background-color: #2c2f48;
   color: white;
   border-radius: 10px;
   border-style: none;
@@ -10,7 +10,6 @@
 }
 
 .GetStarted:hover {
-  background-color:#343753;
+  background-color: #343753;
   transition: 0.1s;
 }
-

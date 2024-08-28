@@ -1,10 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 
-import styles from './ProfilePictureIcon.module.css';
-import { UserDataContext } from '../../src/App';
+import styles from "./ProfilePictureIcon.module.css";
+import { UserDataContext } from "../../src/App";
 
-const ProfilePictureIcon = ( { className }) => {
-  const [ userProfilePictureURL, setUserProfilePictureURL ] = useState('front_end\src\assets\Temp\profile_picture.jpg')
+const ProfilePictureIcon = ({ className }) => {
+  const [userProfilePictureURL, setUserProfilePictureURL] = useState(
+    "front_endsrcassetsTempprofile_picture.jpg",
+  );
   const { user } = useContext(UserDataContext);
 
   useEffect(() => {
@@ -13,10 +15,12 @@ const ProfilePictureIcon = ( { className }) => {
     }
   }, [user]);
 
-  
-  return ( 
-    <img className={`${styles.ProfilePictureIcon} ${className}`} src={userProfilePictureURL}/>
-   );
-}
- 
+  return (
+    <img
+      className={`${styles.ProfilePictureIcon} ${className}`}
+      src={userProfilePictureURL}
+    />
+  );
+};
+
 export default ProfilePictureIcon;

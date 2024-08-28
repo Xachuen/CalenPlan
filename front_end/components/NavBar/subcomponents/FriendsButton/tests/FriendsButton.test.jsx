@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {FriendsButton} from '../FriendsButton';
+import { FriendsButton } from "../FriendsButton";
 
-describe('<FriendsButton />', () => {});
+describe("<FriendsButton />", () => {});

@@ -1,1 +1,1 @@
-export * from './FriendLabel';
+export * from "./FriendLabel";

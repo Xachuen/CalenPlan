@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {DayRow} from '../DayRow';
+import { DayRow } from "../DayRow";
 
-describe('<DayRow />', () => {});
+describe("<DayRow />", () => {});

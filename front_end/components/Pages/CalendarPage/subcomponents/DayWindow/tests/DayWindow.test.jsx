@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-import {DayWindow} from '../DayWindow';
+import { DayWindow } from "../DayWindow";
 
-describe('<DayWindow />', () => {});
+describe("<DayWindow />", () => {});
