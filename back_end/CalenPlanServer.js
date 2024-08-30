@@ -177,6 +177,8 @@ app.post("/api/user-data", async (req, res) => {
       user_email: userEmail,
       friends: [],
       friend_requests: [],
+      members: [userEmail],
+      accessedCalendars: [userEmail],
       active: true,
       calendar_data: {},
     });

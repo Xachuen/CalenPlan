@@ -31,8 +31,8 @@ function App() {
     isSignedIn,
     user,
     isLoaded,
-    friendsList: [],
-    friendRequests: [],
+    accessedCalendars: [],
+    members: [] 
   });
   const [localFriendsList, setLocalFriendsList] = useState([]);
   const [localFriendRequests, setLocalFriendRequests] = useState([]);
@@ -56,7 +56,7 @@ function App() {
           });
 
           if (responseData) {
-            setUserData({ isSignedIn, user, isLoaded });
+            setUserData({ isSignedIn, user, isLoaded, accessedCalendars: responseData.accessedCalendars, members: responseData.members });
             setEventsData(responseData.calendar_data);
 
             setLocalFriendsList(responseData.friends);
