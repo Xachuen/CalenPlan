@@ -18,12 +18,12 @@
   width: 300px;
 }
 
-.FriendsList {
+.MembersList {
   overflow-x: hidden; /* Hide horizontal scrolling */
   max-height: 15rem;
 }
 
-.RequestList {
+.CalendarsList {
   overflow-x: hidden; /* Hide horizontal scrolling */
   max-height: 15rem;
 }
@@ -52,4 +52,12 @@
 :global(.nav-link.active) {
   /* Your custom styles */
   color: #282a36 !important;
+}
+
+.EmailError {
+  color: rgb(255, 83, 83);
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  margin-left: 0.5rem;
 }

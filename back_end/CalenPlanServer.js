@@ -146,7 +146,7 @@ app.put("/api/user-data", async (req, res) => {
       { user_id: userId },
       {
         $set: { calendar_data: calendar_data },
-      },
+      }
     );
 
     if (result.matchedCount > 0) {
@@ -199,7 +199,7 @@ app.post("/api/user-data/:userId/friends/requests", async (req, res) => {
       { user_email: requestedFriend },
       {
         $addToSet: { friend_requests: userEmail },
-      },
+      }
     );
 
     if (result.matchedCount > 0) {
@@ -224,7 +224,7 @@ app.post("/api/user-data/:userId/friends/requests/accept", async (req, res) => {
       {
         $addToSet: { friends: requesterEmail },
         $pull: { friend_requests: requesterEmail },
-      },
+      }
     );
 
     const requesterResult = await userDataCollection.updateOne(
@@ -232,7 +232,7 @@ app.post("/api/user-data/:userId/friends/requests/accept", async (req, res) => {
       {
         $addToSet: { friends: accepterEmail },
         $pull: { friend_requests: accepterEmail },
-      },
+      }
     );
     console.log("Success! Added friends.");
   } catch (error) {
@@ -251,14 +251,14 @@ app.post("/api/user-data/:userId/friends/requests/reject", async (req, res) => {
       { user_email: rejecterEmail },
       {
         $pull: { friend_requests: requesterEmail },
-      },
+      }
     );
 
     const requesterResult = await userDataCollection.updateOne(
       { user_email: requesterEmail },
       {
         $pull: { friend_requests: rejecterEmail },
-      },
+      }
     );
     console.log("Success! Reject friend.");
   } catch (error) {
@@ -277,18 +277,38 @@ app.post("/api/user-data/:userId/friends/delete", async (req, res) => {
       { user_email: userEmail },
       {
         $pull: { friends: deletedFriendEmail },
-      },
+      }
     );
 
     const friendResult = await userDataCollection.updateOne(
       { user_email: deletedFriendEmail },
       {
         $pull: { friends: userEmail },
-      },
+      }
     );
     console.log("Success! Deleted friend.");
   } catch (error) {
     console.error("Error deleting friend.:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Members
+app.post("/api/user-data/:userId/members/add", async (req, res) => {
+  const { friendEmail, userEmail } = req.body;
+  const { userDataCollection } = await connectToDatabase();
+
+  try {
+    const accepterResult = await userDataCollection.updateOne(
+      { user_email: userEmail },
+      {
+        $addToSet: { members: friendEmail },
+      }
+    );
+
+    console.log("Success! Added member");
+  } catch (error) {
+    console.error("Error accepting friend request:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

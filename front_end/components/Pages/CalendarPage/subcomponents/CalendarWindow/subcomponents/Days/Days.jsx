@@ -42,7 +42,7 @@ const Days = () => {
     const curMonth = currentDate.getMonth();
 
     const firstDayOfMonth = getWeekday(
-      new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
+      new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
     );
     const currentMonthDays = getDaysOfMonth(currentDate);
     let newDayData = [];
@@ -60,13 +60,13 @@ const Days = () => {
         prevYear,
         prevMonth,
         "faded",
-        today,
-      ),
+        today
+      )
     );
 
     // Create visible days of current month.
     newDayData.push(
-      ...generateDayData(1, currentMonthDays, curYear, curMonth, "full", today),
+      ...generateDayData(1, currentMonthDays, curYear, curMonth, "full", today)
     );
 
     const remainingDays = maxDays - newDayData.length;
@@ -77,7 +77,7 @@ const Days = () => {
     const nextYear = nextDate.getFullYear();
 
     newDayData.push(
-      ...generateDayData(1, remainingDays, nextYear, nextMonth, "faded", today),
+      ...generateDayData(1, remainingDays, nextYear, nextMonth, "faded", today)
     );
 
     setDayData(newDayData);
@@ -85,7 +85,6 @@ const Days = () => {
 
   return (
     <>
-      {console.log(dayData)}
       {dayData.map((dayObject) => {
         return (
           <DayBox

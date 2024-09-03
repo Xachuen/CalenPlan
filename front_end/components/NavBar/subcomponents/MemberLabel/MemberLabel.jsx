@@ -1,11 +1,21 @@
-import React from 'react';
+import React from "react";
 
-import styles from './MemberLabel.module.css';
+import styles from "./MemberLabel.module.css";
+import { shortenEmail } from "../../../../utils/friendUtils";
 
-export interface MemberLabelProps {
-  prop?: string;
-}
+const MemberLabel = ({ memberEmail }) => {
+  const removeMember = () => {};
 
-export function MemberLabel({prop = 'default value'}: MemberLabelProps) {
-  return <div className={styles.MemberLabel}>MemberLabel {prop}</div>;
-}
+  return (
+    <form className={styles.MemberLabel} onSubmit={removeMember}>
+      <p className={styles.MemberEmail}>{shortenEmail(memberEmail)}</p>
+      <div>
+        <button className={styles.DeleteButton} type="submit">
+          X
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default MemberLabel;
