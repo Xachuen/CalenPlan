@@ -41,8 +41,9 @@ const DayHeader = () => {
   }
 
   const { eventsData, setEventsData } = useContext(EventsDataContext);
-  const UserData = useContext(UserDataContext);
-  const { user, isSignedIn, isLoaded } = UserData;
+  const {
+    userData: { user },
+  } = useContext(UserDataContext);
   const navigate = useNavigate();
   const { displayMonth } = useContext(DisplayMonthContext);
 

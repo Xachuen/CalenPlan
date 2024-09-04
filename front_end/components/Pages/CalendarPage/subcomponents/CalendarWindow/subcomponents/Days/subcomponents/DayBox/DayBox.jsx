@@ -21,8 +21,9 @@ const DayBox = ({
   const { displayMonth, setDisplayMonth } = useContext(DisplayMonthContext);
   const { eventsData, setEventsData } = useContext(EventsDataContext);
 
-  const { user } = useContext(UserDataContext);
-
+  const {
+    userData: { user },
+  } = useContext(UserDataContext);
   return (
     <div
       className={`${isCurrentDay ? styles.CurrentDay : ""} ${styles.DayBox} ${styles[colorDisplay]}`}

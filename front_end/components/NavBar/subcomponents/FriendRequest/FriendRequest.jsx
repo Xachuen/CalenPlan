@@ -6,7 +6,9 @@ import { FriendsContext, UserDataContext } from "../../../../src/App";
 import { shortenEmail } from "../../../../utils/friendUtils";
 
 const FriendRequest = ({ requesterEmail }) => {
-  const { user } = useContext(UserDataContext);
+  const {
+    userData: { user },
+  } = useContext(UserDataContext);
   const {
     localFriendRequests,
     localFriendsList,
@@ -27,8 +29,8 @@ const FriendRequest = ({ requesterEmail }) => {
       });
       setLocalFriendRequests(
         localFriendRequests.filter(
-          (friendRequest) => friendRequest !== requesterEmail,
-        ),
+          (friendRequest) => friendRequest !== requesterEmail
+        )
       );
       setLocalFriendsList([...localFriendsList, requesterEmail]);
     } else if (acceptReject === "reject") {
@@ -41,8 +43,8 @@ const FriendRequest = ({ requesterEmail }) => {
       });
       setLocalFriendRequests(
         localFriendRequests.filter(
-          (friendRequest) => friendRequest !== requesterEmail,
-        ),
+          (friendRequest) => friendRequest !== requesterEmail
+        )
       );
     }
   };

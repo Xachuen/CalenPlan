@@ -32,7 +32,7 @@ function App() {
     user,
     isLoaded,
     accessedCalendars: [],
-    members: [] 
+    members: [],
   });
   const [localFriendsList, setLocalFriendsList] = useState([]);
   const [localFriendRequests, setLocalFriendRequests] = useState([]);
@@ -56,7 +56,13 @@ function App() {
           });
 
           if (responseData) {
-            setUserData({ isSignedIn, user, isLoaded, accessedCalendars: responseData.accessedCalendars, members: responseData.members });
+            setUserData({
+              isSignedIn,
+              user,
+              isLoaded,
+              accessedCalendars: responseData.accessedCalendars,
+              members: responseData.members,
+            });
             setEventsData(responseData.calendar_data);
 
             setLocalFriendsList(responseData.friends);
@@ -76,6 +82,7 @@ function App() {
 
   return (
     <>
+      {console.log(userData)}
       <Router>
         <SocketContext.Provider value={socket}>
           <FriendsContext.Provider
@@ -86,7 +93,7 @@ function App() {
               setLocalFriendRequests,
             }}
           >
-            <UserDataContext.Provider value={userData}>
+            <UserDataContext.Provider value={{ userData, setUserData }}>
               <EventsDataContext.Provider value={{ eventsData, setEventsData }}>
                 <DisplayMonthContext.Provider
                   value={{ displayMonth, setDisplayMonth }}

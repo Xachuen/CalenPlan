@@ -6,7 +6,9 @@ import { postToServer } from "../../../../utils/dataBaseUtils";
 import { FriendsContext, UserDataContext } from "../../../../src/App";
 
 const FriendLabel = ({ friendEmail }) => {
-  const { user } = useContext(UserDataContext);
+  const {
+    userData: { user },
+  } = useContext(UserDataContext);
   const {
     localFriendsList,
     setLocalFriendsList,
@@ -26,8 +28,8 @@ const FriendLabel = ({ friendEmail }) => {
     // Handle friends locally
     setLocalFriendsList(
       localFriendsList.filter(
-        (listedFriendEmail) => listedFriendEmail !== friendEmail,
-      ),
+        (listedFriendEmail) => listedFriendEmail !== friendEmail
+      )
     );
   };
 

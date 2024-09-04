@@ -12,7 +12,9 @@ const CalendarButton = ({ className }) => {
   const [showError, setShowError] = useState(false);
   const toggleDropdown = () => setShow(!show);
 
-  const { user } = useContext(UserDataContext);
+  const {
+    userData: { user, members, accessedCalendars },
+  } = useContext(UserDataContext);
   const { localFriendsList } = useContext(FriendsContext);
   const [friendEmailInput, setFriendEmailInput] = useState("");
 
@@ -47,25 +49,23 @@ const CalendarButton = ({ className }) => {
           <Tabs defaultActiveKey="members" className={styles.BoldTabTitle}>
             <Tab eventKey="members" title="Members">
               <div className={styles.MembersList}>
-                <MemberLabel memberEmail={"jag@email.com"} />
-                {/* {localFriendsList.map((friendEmail) => {
+                {members.map((memberEmail) => {
                   return (
-                    <FriendLabel key={friendEmail} friendEmail={friendEmail} />
+                    <MemberLabel key={memberEmail} memberEmail={memberEmail} />
                   );
-                })} */}
+                })}
               </div>
             </Tab>
             <Tab eventKey="calendars" title="Calendars">
               <div className={styles.CalendarsList}>
-                <CalendarLabel calendarEmail={"jigity@email.com"} />
-                {/*     {localFriendRequests.map((requesterEmail) => {
+                {accessedCalendars.map((calendarEmail) => {
                   return (
-                    <FriendRequest
-                      key={requesterEmail}
-                      requesterEmail={requesterEmail}
+                    <CalendarLabel
+                      key={calendarEmail}
+                      calendarEmail={calendarEmail}
                     />
                   );
-                })} */}
+                })}
               </div>
             </Tab>
           </Tabs>

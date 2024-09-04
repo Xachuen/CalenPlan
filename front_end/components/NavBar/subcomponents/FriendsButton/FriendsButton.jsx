@@ -7,7 +7,9 @@ import FriendRequest from "../FriendRequest/FriendRequest";
 import FriendLabel from "../FriendLabel/FriendLabel";
 
 const FriendsButton = ({ className }) => {
-  const { user } = useContext(UserDataContext);
+  const {
+    userData: { user },
+  } = useContext(UserDataContext);
   const { localFriendsList, localFriendRequests } = useContext(FriendsContext);
 
   // These handle showing the drop down.

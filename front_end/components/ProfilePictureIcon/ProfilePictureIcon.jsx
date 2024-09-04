@@ -5,10 +5,11 @@ import { UserDataContext } from "../../src/App";
 
 const ProfilePictureIcon = ({ className }) => {
   const [userProfilePictureURL, setUserProfilePictureURL] = useState(
-    "front_endsrcassetsTempprofile_picture.jpg",
+    "front_endsrcassetsTempprofile_picture.jpg"
   );
-  const { user } = useContext(UserDataContext);
-
+  const {
+    userData: { user },
+  } = useContext(UserDataContext);
   useEffect(() => {
     if (user) {
       setUserProfilePictureURL(user.imageUrl);
