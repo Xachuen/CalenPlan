@@ -2,13 +2,11 @@ import React, { useContext } from "react";
 import styles from "./MemberLabel.module.css";
 import { shortenEmail } from "../../../../utils/friendUtils";
 import { UserDataContext } from "../../../../src/App";
+import { postToServer } from "../../../../utils/dataBaseUtils";
 
 const MemberLabel = ({ memberEmail }) => {
-  const {
-    userData: { user },
-    setUserData,
-  } = useContext(UserDataContext);
-
+  const { userData, setUserData } = useContext(UserDataContext);
+  const { user } = userData;
   const removeMember = () => {
     postToServer({
       bodyData: {

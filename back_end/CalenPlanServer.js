@@ -313,6 +313,26 @@ app.post("/api/user-data/:userId/members/add", async (req, res) => {
   }
 });
 
+app.post("/api/user-data/:userId/members/remove", async (req, res) => {
+  const { deletedMemberEmail, userEmail } = req.body;
+  const { userDataCollection } = await connectToDatabase();
+
+  // When the user rejects the friend request, the database updates for both the requester and the accepter.
+  try {
+    const userResult = await userDataCollection.updateOne(
+      { user_email: userEmail },
+      {
+        $pull: { members: deletedMemberEmail },
+      }
+    );
+
+    console.log("Success! removed friend.");
+  } catch (error) {
+    console.error("Error removing friend.:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 io.on("connection", (socket) => {
   console.log("Connected, connected, you just got connected!");
 });

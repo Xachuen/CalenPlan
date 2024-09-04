@@ -13,18 +13,25 @@ const CalendarButton = ({ className }) => {
   const toggleDropdown = () => setShow(!show);
 
   const {
+    userData,
     userData: { user, members, accessedCalendars },
+    setUserData,
   } = useContext(UserDataContext);
   const { localFriendsList } = useContext(FriendsContext);
   const [friendEmailInput, setFriendEmailInput] = useState("");
 
   const addToMembers = (event) => {
     event.preventDefault();
+
     if (!localFriendsList.includes(friendEmailInput)) {
       setShowError(true);
       return;
     }
     setShowError(false);
+
+    setFriendEmailInput("");
+    setUserData({ ...userData, members: [...members, friendEmailInput] });
+
     postToServer({
       bodyData: {
         friendEmail: friendEmailInput,
