@@ -203,9 +203,12 @@ app.post("/api/user-data/:userId/friends/requests", async (req, res) => {
     );
 
     if (result.matchedCount > 0) {
-      res.json({ message: "Friend request sent successfully" });
+      res.json({ message: "Friend request sent successfully", success: true });
     } else {
-      console.log("Could not find anything");
+      res.json({
+        messsage: "Failed to send a request to someone.",
+        success: false,
+      });
     }
   } catch (error) {
     console.error("Error sending friend request:", error);

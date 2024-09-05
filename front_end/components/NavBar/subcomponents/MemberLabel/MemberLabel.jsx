@@ -6,7 +6,7 @@ import { postToServer } from "../../../../utils/dataBaseUtils";
 
 const MemberLabel = ({ memberEmail }) => {
   const { userData, setUserData } = useContext(UserDataContext);
-  const { user } = userData;
+  const { user, curCalendar } = userData;
   const removeMember = () => {
     postToServer({
       bodyData: {
@@ -29,11 +29,12 @@ const MemberLabel = ({ memberEmail }) => {
     <form className={styles.MemberLabel} onSubmit={removeMember}>
       <p className={styles.MemberEmail}>{shortenEmail(memberEmail)}</p>
       <div>
-        {memberEmail !== user.primaryEmailAddress.emailAddress && (
-          <button className={styles.DeleteButton} type="submit">
-            X
-          </button>
-        )}
+        {curCalendar == user.primaryEmailAddress.emailAddress &&
+          memberEmail !== user.primaryEmailAddress.emailAddress && (
+            <button className={styles.DeleteButton} type="submit">
+              X
+            </button>
+          )}
       </div>
     </form>
   );

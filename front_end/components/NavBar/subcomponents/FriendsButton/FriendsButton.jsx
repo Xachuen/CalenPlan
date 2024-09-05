@@ -12,6 +12,8 @@ const FriendsButton = ({ className }) => {
   } = useContext(UserDataContext);
   const { localFriendsList, localFriendRequests } = useContext(FriendsContext);
 
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("Something went wrong!");
   // These handle showing the drop down.
   const [show, setShow] = useState(false);
   const toggleDropdown = () => setShow(!show);
@@ -20,15 +22,36 @@ const FriendsButton = ({ className }) => {
   const [friendEmailInput, setFriendEmailInput] = useState("");
 
   //Function for submitting friend request
-  const sendFriendRequest = (event) => {
+  const sendFriendRequest = async (event) => {
     event.preventDefault();
-    postToServer({
+
+    if (friendEmailInput === user.primaryEmailAddress.emailAddress) {
+      setShowError(true);
+      setErrorMessage("Input an email address besides yourself!");
+      return;
+    }
+
+    if (localFriendsList.includes(friendEmailInput)) {
+      setShowError(true);
+      setErrorMessage("Input an email address not in your friend's list!");
+      return;
+    }
+
+    const res = await postToServer({
       bodyData: {
         requestedFriend: friendEmailInput,
         userEmail: user.primaryEmailAddress.emailAddress,
       },
       linkExtender: `/api/user-data/${user.id}/friends/requests`,
     });
+
+    if (!res.success) {
+      setErrorMessage("Enter an existing email address on CalenPlan!");
+      setShowError(true);
+    } else {
+      setShowError(false);
+      setFriendEmailInput("");
+    }
   };
 
   return (
@@ -81,6 +104,7 @@ const FriendsButton = ({ className }) => {
               />
               <button className={styles.AddFriendButton}>Add</button>
             </form>
+            {showError && <p className={styles.EmailError}>{errorMessage}</p>}
           </Dropdown.Menu>
         </Dropdown>
       </div>
