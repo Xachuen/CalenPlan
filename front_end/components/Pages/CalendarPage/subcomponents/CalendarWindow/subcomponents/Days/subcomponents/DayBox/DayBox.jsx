@@ -22,8 +22,9 @@ const DayBox = ({
   const { eventsData, setEventsData } = useContext(EventsDataContext);
 
   const {
-    userData: { user },
+    userData: { user, curCalendar },
   } = useContext(UserDataContext);
+
   return (
     <div
       className={`${isCurrentDay ? styles.CurrentDay : ""} ${styles.DayBox} ${styles[colorDisplay]}`}
@@ -49,7 +50,7 @@ const DayBox = ({
 
           putInServer({
             bodyData: {
-              userId: user.id,
+              curCalendar: curCalendar,
               calendar_data: updatedEventsData,
             },
           });

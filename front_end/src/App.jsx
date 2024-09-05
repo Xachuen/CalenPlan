@@ -33,6 +33,7 @@ function App() {
     isLoaded,
     accessedCalendars: [],
     members: [],
+    curCalendar: "",
   });
   const [localFriendsList, setLocalFriendsList] = useState([]);
   const [localFriendRequests, setLocalFriendRequests] = useState([]);
@@ -62,6 +63,7 @@ function App() {
               isLoaded,
               accessedCalendars: responseData.accessedCalendars,
               members: responseData.members,
+              curCalendar: user.primaryEmailAddress.emailAddress,
             });
             setEventsData(responseData.calendar_data);
 

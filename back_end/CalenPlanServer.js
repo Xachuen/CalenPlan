@@ -103,7 +103,7 @@ app.post("/api/webhooks", async (req, res) => {
 
 app.get("/api/user-data", async (req, res) => {
   console.log("Hello! You just entered the backend!");
-  const { database, userDataCollection } = await connectToDatabase();
+  const { userDataCollection } = await connectToDatabase();
   const { userEmail } = req.body;
   console.log(userEmail);
   const userId = req.query.userId;
@@ -128,14 +128,14 @@ app.get("/api/user-data", async (req, res) => {
 });
 
 app.put("/api/user-data", async (req, res) => {
+  const { userDataCollection } = await connectToDatabase();
+  const { curCalendar, calendar_data } = req.body;
+
   console.log("You are putting in the backend!");
+  console.log(`Putting in ${curCalendar}`);
 
-  const { database, userDataCollection } = await connectToDatabase();
-  const { userId, calendar_data } = req.body;
-
-  console.log(userId);
   console.log(calendar_data);
-  if (!userId || !calendar_data) {
+  if (!curCalendar || !calendar_data) {
     return res
       .status(400)
       .json({ message: "userId and calendar_data are required" });
@@ -143,7 +143,7 @@ app.put("/api/user-data", async (req, res) => {
 
   try {
     const result = await userDataCollection.updateOne(
-      { user_id: userId },
+      { user_email: curCalendar },
       {
         $set: { calendar_data: calendar_data },
       }
@@ -163,7 +163,7 @@ app.put("/api/user-data", async (req, res) => {
 app.post("/api/user-data", async (req, res) => {
   console.log("You are posting in the backend!");
 
-  const { database, userDataCollection } = await connectToDatabase();
+  const { userDataCollection } = await connectToDatabase();
   const { userId, userEmail } = req.body;
 
   let userData = await userDataCollection.findOne({ user_id: userId });
@@ -299,10 +299,18 @@ app.post("/api/user-data/:userId/members/add", async (req, res) => {
   const { userDataCollection } = await connectToDatabase();
 
   try {
+    // Add members, then add to accessed calendars
     const accepterResult = await userDataCollection.updateOne(
       { user_email: userEmail },
       {
         $addToSet: { members: friendEmail },
+      }
+    );
+
+    const addedResults = await userDataCollection.updateOne(
+      { user_email: friendEmail },
+      {
+        $addToSet: { accessedCalendars: userEmail },
       }
     );
 
@@ -326,11 +334,35 @@ app.post("/api/user-data/:userId/members/remove", async (req, res) => {
       }
     );
 
+    const removedResult = await userDataCollection.updateOne(
+      { user_email: friendEmail },
+      {
+        $pull: { accessedCalendars: userEmail },
+      }
+    );
+
     console.log("Success! removed friend.");
   } catch (error) {
     console.error("Error removing friend.:", error);
     res.status(500).json({ message: "Internal server error" });
   }
+});
+
+// Switching
+app.post("/api/user-data/:userId/events", async (req, res) => {
+  const { userDataCollection } = await connectToDatabase();
+  const { userEmail } = req.body;
+
+  let userData = await userDataCollection.findOne({ user_email: userEmail });
+
+  if (!userData) {
+    res.status(404).json({ message: "User not found" });
+  }
+
+  res.json({
+    eventsData: userData.calendar_data,
+    members: userData.members,
+  });
 });
 
 io.on("connection", (socket) => {

@@ -42,8 +42,9 @@ const DayHeader = () => {
 
   const { eventsData, setEventsData } = useContext(EventsDataContext);
   const {
-    userData: { user },
+    userData: { user, curCalendar },
   } = useContext(UserDataContext);
+
   const navigate = useNavigate();
   const { displayMonth } = useContext(DisplayMonthContext);
 
@@ -100,7 +101,7 @@ const DayHeader = () => {
     setEventsData(updatedEventsData);
     putInServer({
       bodyData: {
-        userId: user.id,
+        curCalendar: curCalendar,
         calendar_data: updatedEventsData,
       },
     });

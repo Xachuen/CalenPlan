@@ -13,7 +13,7 @@ const MemberLabel = ({ memberEmail }) => {
         deletedMemberEmail: memberEmail,
         userEmail: user.primaryEmailAddress.emailAddress,
       },
-      linkExtender: "/api/user-data/:userId/members/remove",
+      linkExtender: `/api/user-data/${userData.user.id}/members/remove`,
     });
 
     // Handle members locally
