@@ -23,17 +23,41 @@ const EventBlock = ({
         <Modal.Header closeButton>
           <div className={`${styles.TitleContainer}`}>
             <h3 className={`${styles.EventNameModal}`}>{eventName}</h3>
-            <div className={styles.EventDescriptors}>
-              <p className={`${styles.EventTimeModal}`}>{eventTime}</p>
-              <p className={styles.EventAddressModal}>{eventAddress}</p>
-            </div>
+            <button className={styles.TrashButton}>
+              <img
+                src="front_end/src/assets/General/trash_icon.svg"
+                className={styles.TrashImg}
+              />
+            </button>
           </div>
         </Modal.Header>
         <Modal.Body>
-          <div className={`${styles.DescriptionContainer}`}>
-            <p className={`${styles.EventDescriptionModal}`}>
-              {eventDescription}
+          <div className={styles.EventDescriptors}>
+            <p className={`${styles.EventTimeModal}`}>
+              <img
+                className={styles.ClockImage}
+                src="front_end/src/assets/General/gray_clock.svg"
+              />
+              {eventTime}
             </p>
+            {eventAddress.length > 0 && (
+              <p className={`${styles.EventAddressModal}`}>
+                <img
+                  className={styles.PinImage}
+                  src="front_end/src/assets/General/gray_pin.svg"
+                />{" "}
+                {eventAddress}
+              </p>
+            )}
+            {eventDescription.length > 0 && (
+              <p className={`${styles.EventDescriptionModal}`}>
+                <img
+                  className={styles.PencilImage}
+                  src="front_end/src/assets/General/gray_pencil.svg"
+                />{" "}
+                {eventDescription}
+              </p>
+            )}
           </div>
         </Modal.Body>
       </Modal>
