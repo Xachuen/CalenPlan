@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import styles from "./ProfilePictureIcon.module.css";
-import { UserDataContext } from "../../src/App";
+import { UserDataContext } from "../../../../src/App.jsx";
 
 const ProfilePictureIcon = ({ className }) => {
   const [userProfilePictureURL, setUserProfilePictureURL] = useState(
-    "front_endsrcassetsTempprofile_picture.jpg"
+    "front_end/src/assets/Temp/profile_picture.jpg"
   );
   const {
     userData: { user },
