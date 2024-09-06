@@ -17,13 +17,17 @@ const EventBlock = ({
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
+  const deleteEvent = () => {
+    handleClose();
+  };
+
   return (
     <>
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <div className={`${styles.TitleContainer}`}>
             <h3 className={`${styles.EventNameModal}`}>{eventName}</h3>
-            <button className={styles.TrashButton}>
+            <button className={styles.TrashButton} onClick={deleteEvent}>
               <img
                 src="front_end/src/assets/General/trash_icon.svg"
                 className={styles.TrashImg}
