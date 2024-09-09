@@ -101,32 +101,6 @@ app.post("/api/webhooks", async (req, res) => {
   });
 });
 
-app.get("/api/user-data", async (req, res) => {
-  console.log("Hello! You just entered the backend!");
-  const { userDataCollection } = await connectToDatabase();
-  const { userEmail } = req.body;
-  console.log(userEmail);
-  const userId = req.query.userId;
-
-  let userData = await userDataCollection.findOne({ user_id: userId });
-
-  // If userData does not exist, we create one.
-  if (!userData) {
-    console.log("Did not find user data, creating instead.");
-    await userDataCollection.insertOne({
-      _id: userId,
-      user_id: userId,
-      friends: [],
-      active: true,
-      calendar_data: {},
-    });
-
-    userData = await userDataCollection.findOne({ user_id: userId });
-  }
-
-  res.json(userData);
-});
-
 app.put("/api/user-data", async (req, res) => {
   const { userDataCollection } = await connectToDatabase();
   const { curCalendar, calendar_data } = req.body;
@@ -181,12 +155,38 @@ app.post("/api/user-data", async (req, res) => {
       accessedCalendars: [userEmail],
       active: true,
       calendar_data: {},
+      address: "",
     });
 
     userData = await userDataCollection.findOne({ user_id: userId });
   }
 
   res.json(userData);
+});
+
+// Address Changing
+app.put("/api/user-data/:userId/address", async (req, res) => {
+  const { userDataCollection } = await connectToDatabase();
+  const { newAddress } = req.body;
+  const userId = req.params.userId;
+
+  try {
+    const result = await userDataCollection.updateOne(
+      { user_id: userId },
+      {
+        $set: { address: newAddress },
+      }
+    );
+
+    if (result.matchedCount > 0) {
+      res.json({ message: "Calendar data updated successfully" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error updating calendar data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 // Handling Friend Requests

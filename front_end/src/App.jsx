@@ -64,6 +64,7 @@ function App() {
               accessedCalendars: responseData.accessedCalendars,
               members: responseData.members,
               curCalendar: user.primaryEmailAddress.emailAddress,
+              address: responseData.address,
             });
             setEventsData(responseData.calendar_data);
 

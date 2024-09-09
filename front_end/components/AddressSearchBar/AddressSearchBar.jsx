@@ -69,7 +69,10 @@ const AddressSearchBar = ({ clickAddress, searchSessionData }) => {
             return (
               <li
                 key={placeObj.mapbox_id}
-                onClick={() => clickAddress(placeObj)}
+                onClick={() => {
+                  setSearchedAddress(placeObj.address);
+                  clickAddress(placeObj);
+                }}
               >
                 {placeObj.address}
               </li>

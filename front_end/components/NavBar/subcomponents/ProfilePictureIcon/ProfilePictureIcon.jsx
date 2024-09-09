@@ -6,6 +6,7 @@ import { Dropdown, Modal } from "react-bootstrap";
 import { SignOutButton } from "@clerk/clerk-react";
 import RoundedBar from "../../../RoundedBar/RoundedBar.jsx";
 import AddressSearchBar from "../../../AddressSearchBar/AddressSearchBar.jsx";
+import { postToServer, putInServer } from "../../../../utils/dataBaseUtils.js";
 
 const ProfilePictureIcon = ({ className }) => {
   const [userProfilePictureURL, setUserProfilePictureURL] = useState(
@@ -13,6 +14,8 @@ const ProfilePictureIcon = ({ className }) => {
   );
 
   const {
+    setUserData,
+    userData,
     userData: { user },
   } = useContext(UserDataContext);
   useEffect(() => {
@@ -38,6 +41,11 @@ const ProfilePictureIcon = ({ className }) => {
 
   const clickAddress = (placeObj) => {
     // Save the address to the data.
+    setUserData({ ...userData, address: placeObj.address });
+    putInServer({
+      bodyData: { newAddress: placeObj.address },
+      linkExtender: `/api/user-data/${user.id}/address`,
+    });
   };
 
   return (
