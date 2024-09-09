@@ -32,6 +32,7 @@
 
 .DisplayLimiter {
   display: inline-block;
+  margin: 0.25rem 0.25rem 1rem 0.25rem;
 }
 
 .SetAddressContainer {
@@ -46,4 +47,9 @@
   font-size: 2rem;
   margin: 0;
   padding: 0;
+}
+
+.SearchContainer {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
