@@ -87,7 +87,7 @@ function App() {
     <>
       {console.log(userData)}
       <Router>
-        <SocketContext.Provider value={socket}>
+        <SocketContext.Provider value={{ socket }}>
           <FriendsContext.Provider
             value={{
               localFriendsList,

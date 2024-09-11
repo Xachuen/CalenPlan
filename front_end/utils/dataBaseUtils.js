@@ -10,7 +10,7 @@ export const putInServer = async ({
         method: "PUT",
         headers: headerData,
         body: JSON.stringify(bodyData),
-      },
+      }
     );
 
     if (!response.ok) {
@@ -19,6 +19,7 @@ export const putInServer = async ({
 
     const result = await response.json();
     console.log("Update successful:", result);
+    return result;
   } catch (error) {
     console.error("Error with accessing calendar data:", error);
   }
@@ -34,7 +35,7 @@ export const getFromServer = async ({
       {
         method: "GET",
         headers: headerData,
-      },
+      }
     );
 
     if (!response.ok) {
@@ -61,7 +62,7 @@ export const postToServer = async ({
         method: "POST",
         body: JSON.stringify(bodyData),
         headers: headerData,
-      },
+      }
     );
 
     if (!response.ok) {

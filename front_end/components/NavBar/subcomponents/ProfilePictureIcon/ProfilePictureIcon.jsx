@@ -82,6 +82,7 @@ const ProfilePictureIcon = ({ className }) => {
             <AddressSearchBar
               clickAddress={clickAddress}
               searchSessionData={[searchSession, setSearchSession]}
+              defaultValue={userData.address}
             />
           </div>
         </Modal.Body>

@@ -16,8 +16,8 @@ const FriendLabel = ({ friendEmail }) => {
     setLocalFriendRequests,
   } = useContext(FriendsContext);
 
-  const deleteFriend = () => {
-    postToServer({
+  const deleteFriend = async () => {
+    await postToServer({
       bodyData: {
         deletedFriendEmail: friendEmail,
         userEmail: user.primaryEmailAddress.emailAddress,

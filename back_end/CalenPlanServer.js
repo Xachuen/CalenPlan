@@ -124,13 +124,14 @@ app.put("/api/user-data", async (req, res) => {
     );
 
     if (result.matchedCount > 0) {
-      res.json({ message: "Calendar data updated successfully" });
+      console.log("this should happen");
+      res.json({ message: "Successfully saved.", success: true });
     } else {
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json({ message: "User not found", success: false });
     }
   } catch (error) {
     console.error("Error updating calendar data:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error", success: false });
   }
 });
 
@@ -297,6 +298,25 @@ app.post("/api/user-data/:userId/friends/delete", async (req, res) => {
 });
 
 // Members
+app.post("/api/members/", async (req, res) => {
+  const { userDataCollection } = await connectToDatabase();
+  const { curCalendar } = req.body;
+
+  console.log("hello world.");
+  console.log(curCalendar);
+  try {
+    const userData = await userDataCollection.findOne({
+      user_email: curCalendar,
+    });
+    if (userData) {
+      console.log(userData.members);
+      res.status(200).json(userData.members);
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Could not fetch members." });
+  }
+});
+
 app.post("/api/user-data/:userId/members/add", async (req, res) => {
   const { friendEmail, userEmail } = req.body;
   const { userDataCollection } = await connectToDatabase();
@@ -370,6 +390,11 @@ app.post("/api/user-data/:userId/events", async (req, res) => {
 
 io.on("connection", (socket) => {
   console.log("Connected, connected, you just got connected!");
+
+  socket.on("postEvent", (members) => {
+    console.log("heyyyy");
+    console.log(members);
+  });
 });
 
 // Start the server on port 3000

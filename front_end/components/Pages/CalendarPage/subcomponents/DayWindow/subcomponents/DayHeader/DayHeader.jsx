@@ -4,6 +4,8 @@ import styles from "./DayHeader.module.css";
 import {
   DisplayMonthContext,
   EventsDataContext,
+  SocketContext,
+  UserDataContext,
 } from "../../../../../../../src/App";
 
 import { v4 as uuidv4 } from "uuid";
@@ -13,18 +15,17 @@ import { useNavigate } from "react-router-dom";
 
 import { getMinutesAway } from "../../../../../../../utils/dateUtils";
 
-import {
-  Modal,
-  Button,
-  Dropdown,
-  FormControl,
-  InputGroup,
-} from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
-import { UserDataContext } from "../../../../../../../src/App";
-import { putInServer } from "../../../../../../../utils/dataBaseUtils.js";
+import {
+  getFromServer,
+  postToServer,
+  putInServer,
+} from "../../../../../../../utils/dataBaseUtils.js";
 
 const DayHeader = () => {
+  const { socket } = useContext(SocketContext);
+
   function formatTime(inputTime) {
     // Split the input time into hours and minutes
     let [hours, minutes] = inputTime.split(":").map(Number);
@@ -99,12 +100,27 @@ const DayHeader = () => {
     };
 
     setEventsData(updatedEventsData);
-    putInServer({
+    const res = await putInServer({
       bodyData: {
         curCalendar: curCalendar,
         calendar_data: updatedEventsData,
       },
     });
+
+    // Ensure the server successrfully saves, if so we can communicate with server to send to members.
+    if (res.success) {
+      console.log("success ya");
+      const members = await postToServer({
+        bodyData: {
+          curCalendar: curCalendar,
+        },
+        linkExtender: "/api/members/",
+      });
+
+      console.log("emitting!");
+      console.log(members);
+      socket.emit("postEvent", members);
+    }
   };
 
   /* Modal event selection */
