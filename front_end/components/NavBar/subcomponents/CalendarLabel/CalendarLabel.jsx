@@ -3,13 +3,18 @@ import React, { useContext } from "react";
 import styles from "./CalendarLabel.module.css";
 
 import { shortenEmail } from "../../../../utils/friendUtils";
-import { EventsDataContext, UserDataContext } from "../../../../src/App";
+import {
+  EventsDataContext,
+  SocketContext,
+  UserDataContext,
+} from "../../../../src/App";
 import { getFromServer, postToServer } from "../../../../utils/dataBaseUtils";
 import { UserButton } from "@clerk/clerk-react";
 
 const CalendarLabel = ({ calendarEmail }) => {
   const { setEventsData } = useContext(EventsDataContext);
   const { userData, setUserData } = useContext(UserDataContext);
+  const { socket } = useContext(SocketContext);
 
   const switchCalendar = async (event) => {
     event.preventDefault();
@@ -28,6 +33,8 @@ const CalendarLabel = ({ calendarEmail }) => {
       curCalendar: calendarEmail,
     });
     setEventsData(res.eventsData);
+
+    socket.emit("joinRoom", calendarEmail);
   };
 
   return (

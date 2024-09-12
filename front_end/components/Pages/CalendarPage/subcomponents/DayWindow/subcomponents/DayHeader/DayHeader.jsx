@@ -109,17 +109,12 @@ const DayHeader = () => {
 
     // Ensure the server successrfully saves, if so we can communicate with server to send to members.
     if (res.success) {
-      console.log("success ya");
-      const members = await postToServer({
-        bodyData: {
-          curCalendar: curCalendar,
-        },
-        linkExtender: "/api/members/",
-      });
-
-      console.log("emitting!");
-      console.log(members);
-      socket.emit("postEvent", members);
+      socket.emit(
+        "postEvent",
+        curCalendar,
+        updatedEventsData,
+        user.primaryEmailAddress.emailAddress
+      );
     }
   };
 
@@ -217,6 +212,14 @@ const DayHeader = () => {
       setShowDropDown(false);
     }, 100);
   };
+
+  socket.on("reflectEventCreation", (eventInformation, senderEmail) => {
+    console.log("heyyy :)");
+    if (!(user.primaryEmailAddress.emailAddress === senderEmail)) {
+      console.log("hereeee!");
+      setEventsData(eventInformation);
+    }
+  });
 
   return (
     <>

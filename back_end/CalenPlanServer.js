@@ -391,9 +391,20 @@ app.post("/api/user-data/:userId/events", async (req, res) => {
 io.on("connection", (socket) => {
   console.log("Connected, connected, you just got connected!");
 
-  socket.on("postEvent", (members) => {
-    console.log("heyyyy");
-    console.log(members);
+  // Rooms
+  socket.on("joinRoom", (emailRoom) => {
+    socket.join(emailRoom);
+    console.log(socket.rooms);
+  });
+
+  // Posting events
+  socket.on("postEvent", (emailRoom, eventInformation, senderEmail) => {
+    console.log("time to emit");
+    io.to(emailRoom).emit(
+      "reflectEventCreation",
+      eventInformation,
+      senderEmail
+    );
   });
 });
 

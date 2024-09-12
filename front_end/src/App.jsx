@@ -70,6 +70,9 @@ function App() {
 
             setLocalFriendsList(responseData.friends);
             setLocalFriendRequests(responseData.friend_requests);
+
+            // Join room.
+            socket.emit("joinRoom", user.primaryEmailAddress.emailAddress);
           }
         } catch (error) {
           console.error("Error fetching data:", error);
