@@ -87,6 +87,7 @@ const DayHeader = () => {
           {
             minuteLength: getMinutesAway(selectedStartTime, selectedEndTime),
             minuteStart: getMinutesAway(hour + ":00", selectedStartTime),
+            creator: user.primaryEmailAddress.emailAddress,
             eventName: eventName,
             eventDescription: eventDescription,
             eventTime: `${formatTime(selectedStartTime)} to ${formatTime(selectedEndTime)}`,

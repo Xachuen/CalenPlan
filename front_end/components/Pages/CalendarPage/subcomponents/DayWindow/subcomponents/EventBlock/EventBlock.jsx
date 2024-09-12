@@ -10,6 +10,7 @@ const EventBlock = ({
   minuteLength,
   minuteStart,
   eventAddress,
+  creator,
   eventCoordinates,
 }) => {
   // States
@@ -37,6 +38,13 @@ const EventBlock = ({
         </Modal.Header>
         <Modal.Body>
           <div className={styles.EventDescriptors}>
+            <p className={`${styles.EventTimeModal}`}>
+              <img
+                className={styles.ClockImage}
+                src="front_end/src/assets/General/gray_author.svg"
+              />
+              {creator}
+            </p>
             <p className={`${styles.EventTimeModal}`}>
               <img
                 className={styles.ClockImage}

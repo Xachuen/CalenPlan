@@ -28,6 +28,7 @@ const DayRow = ({ hour, strRep, hourLabel, timeDivide }) => {
               <EventBlock
                 key={crypto.randomUUID()}
                 minuteLength={dateEventObj.minuteLength}
+                creator={dateEventObj.creator}
                 minuteStart={dateEventObj.minuteStart}
                 eventName={dateEventObj.eventName}
                 eventTime={dateEventObj.eventTime}
