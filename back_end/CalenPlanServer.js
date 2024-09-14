@@ -165,6 +165,57 @@ app.post("/api/user-data", async (req, res) => {
   res.json(userData);
 });
 
+app.delete("/api/user-data/:userId/events", async (req, res) => {
+  const { userDataCollection } = await connectToDatabase();
+  const { curCalendar, date, hour, index } = req.body;
+
+  try {
+    await userDataCollection.updateOne(
+      { user_email: curCalendar },
+      {
+        $unset: { [`calendar_data.${date}.${hour}.${index}`]: "" },
+      }
+    );
+
+    await userDataCollection.updateOne(
+      { user_email: curCalendar },
+      {
+        $pull: { [`calendar_data.${date}.${hour}`]: null },
+      }
+    );
+
+    await userDataCollection.updateOne(
+      {
+        user_email: curCalendar,
+        [`calendar_data.${date}.${hour}`]: { $exists: true, $size: 0 },
+      },
+      {
+        $unset: { [`calendar_data.${date}.${hour}`]: "" },
+      }
+    );
+
+    await userDataCollection.updateOne(
+      {
+        user_email: curCalendar,
+        [`calendar_data.${date}`]: { $exists: true, $eq: {} },
+      },
+      {
+        $unset: { [`calendar_data.${date}`]: "" },
+      }
+    );
+
+    // Fetch the updated calendar data
+    const newData = await userDataCollection.findOne(
+      { user_email: curCalendar },
+      { projection: { calendar_data: 1 } } // Only retrieve calendar_data
+    );
+    res.status(200).json(newData);
+  } catch (error) {
+    console.error("Error deleting calendar data:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // Address Changing
 app.put("/api/user-data/:userId/address", async (req, res) => {
   const { userDataCollection } = await connectToDatabase();
@@ -389,19 +440,39 @@ app.post("/api/user-data/:userId/events", async (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("Connected, connected, you just got connected!");
+  console.log(`Connected, connected, you just got connected! ${socket.id}`);
+
+  socket.on("disconnect", (reason) => {
+    console.log(`User ${socket.id} disconnected: ${reason}`);
+  });
 
   // Rooms
   socket.on("joinRoom", (emailRoom) => {
     socket.join(emailRoom);
-    console.log(socket.rooms);
+    console.log(`Welcome ${socket.id} to ${emailRoom}`);
   });
 
   // Posting events
   socket.on("postEvent", (emailRoom, eventInformation, senderEmail) => {
-    console.log("time to emit");
+    console.log(
+      `emit creation reflection to the room ${emailRoom} from the sender ${senderEmail}`
+    );
+    console.log(io.sockets.adapter.rooms.get(emailRoom));
     io.to(emailRoom).emit(
       "reflectEventCreation",
+      eventInformation,
+      senderEmail
+    );
+  });
+
+  // Deleting Events
+  socket.on("deleteEvent", (emailRoom, eventInformation, senderEmail) => {
+    console.log(
+      `emit deletion reflection to the room ${emailRoom} from the sender ${senderEmail}`
+    );
+    console.log(io.sockets.adapter.rooms.get(emailRoom));
+    io.to(emailRoom).emit(
+      "reflectEventDeletion",
       eventInformation,
       senderEmail
     );

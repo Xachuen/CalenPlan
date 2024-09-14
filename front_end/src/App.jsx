@@ -1,4 +1,4 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -21,7 +21,7 @@ export const FriendsContext = createContext();
 export const SocketContext = createContext();
 
 function App() {
-  const socket = io(import.meta.env.VITE_SERVER_URL);
+  const socket = useRef();
 
   const { isSignedIn, user, isLoaded } = useUser();
 
@@ -41,6 +41,9 @@ function App() {
   useEffect(() => {
     if (user && isSignedIn && isLoaded) {
       console.log("Success");
+      // Connect a socket to the server.
+      socket.current = io(import.meta.env.VITE_SERVER_URL);
+
       // If the user is signed in, we want to get the data from
       // the database.
       console.log(`setting user to: ${user.id}`);
@@ -72,7 +75,10 @@ function App() {
             setLocalFriendRequests(responseData.friend_requests);
 
             // Join room.
-            socket.emit("joinRoom", user.primaryEmailAddress.emailAddress);
+            socket.current.emit(
+              "joinRoom",
+              user.primaryEmailAddress.emailAddress
+            );
           }
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -90,7 +96,7 @@ function App() {
     <>
       {console.log(userData)}
       <Router>
-        <SocketContext.Provider value={{ socket }}>
+        <SocketContext.Provider value={{ socket: socket.current }}>
           <FriendsContext.Provider
             value={{
               localFriendsList,

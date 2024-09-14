@@ -215,9 +215,17 @@ const DayHeader = () => {
   };
 
   socket.on("reflectEventCreation", (eventInformation, senderEmail) => {
-    console.log("heyyy :)");
+    console.log("recievedd");
     if (!(user.primaryEmailAddress.emailAddress === senderEmail)) {
-      console.log("hereeee!");
+      console.log("reflectinggg");
+      setEventsData(eventInformation);
+    }
+  });
+
+  socket.on("reflectEventDeletion", (eventInformation, senderEmail) => {
+    console.log("recieved");
+    if (!(user.primaryEmailAddress.emailAddress === senderEmail)) {
+      console.log("reflectinggg");
       setEventsData(eventInformation);
     }
   });

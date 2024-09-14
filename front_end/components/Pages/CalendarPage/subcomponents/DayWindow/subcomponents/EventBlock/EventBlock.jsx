@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import styles from "./EventBlock.module.css";
 import { Modal } from "react-bootstrap";
+import { deleteFromServer } from "../../../../../../../utils/dataBaseUtils";
+import {
+  EventsDataContext,
+  SocketContext,
+  UserDataContext,
+} from "../../../../../../../src/App";
 
 const EventBlock = ({
+  date,
+  hour,
+  index,
   eventName,
   eventDescription,
   eventTime,
@@ -18,8 +27,32 @@ const EventBlock = ({
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  const deleteEvent = () => {
+  const {
+    userData: { user, curCalendar },
+  } = useContext(UserDataContext);
+  const { setEventsData } = useContext(EventsDataContext);
+  const { socket } = useContext(SocketContext);
+
+  const deleteEvent = async () => {
     handleClose();
+    const newData = await deleteFromServer({
+      bodyData: {
+        curCalendar: curCalendar,
+        date: date,
+        hour: hour,
+        index: index,
+      },
+      linkExtender: `/api/user-data/${user.id}/events`,
+    });
+
+    setEventsData(newData.calendar_data);
+
+    socket.emit(
+      "deleteEvent",
+      curCalendar,
+      newData.calendar_data,
+      user.primaryEmailAddress.emailAddress
+    );
   };
 
   return (

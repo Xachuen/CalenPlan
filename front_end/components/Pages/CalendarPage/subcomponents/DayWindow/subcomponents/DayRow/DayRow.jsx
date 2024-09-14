@@ -23,9 +23,12 @@ const DayRow = ({ hour, strRep, hourLabel, timeDivide }) => {
         {/* {console.log(strRep, hourLabel, timeDivide)} */}
         {eventsData[date_id] &&
           eventsData[date_id][hour - 1] &&
-          eventsData[date_id][hour - 1].map((dateEventObj) => {
+          eventsData[date_id][hour - 1].map((dateEventObj, index) => {
             return (
               <EventBlock
+                date={date_id}
+                hour={hour - 1}
+                index={index}
                 key={crypto.randomUUID()}
                 minuteLength={dateEventObj.minuteLength}
                 creator={dateEventObj.creator}
