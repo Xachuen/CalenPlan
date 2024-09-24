@@ -25,9 +25,9 @@ const NavBar = () => {
         <FriendsButton
           className={`${styles.NavItem} ${styles.NavItemButton}`}
         />
-        <NotificationButton
+        {/* <NotificationButton
           className={`${styles.NavItem} ${styles.NavItemButton}`}
-        />
+        /> */}
         <CalendarButton
           className={`${styles.NavItem} ${styles.NavItemButton}`}
         />

@@ -21,10 +21,10 @@ const MonthTitle = () => {
     <div>
       <div className={`${styles.MonthTitle}`}>
         {currentMonth}
-        <img
+        {/* <img
           className={`${styles.ArrowButton}`}
           src="front_end\src\assets\General\triangle_down.svg"
-        ></img>
+        ></img> */}
       </div>
     </div>
   );
