@@ -43,7 +43,7 @@ CalenPlan is a web-based calendar application that allows users to create, manag
    ```
 
 3. **Environment Variables**
-   Create a `.env` file in the root directory and add the following:
+   Create a `.env.local` file in the root directory and add the following:
    ```
     VITE_CLERK_PUBLISHABLE_KEY=//Create a clerk account for this.
     CLERK_PUBLISHABLE_KEY=//Create a clerk account for this. Should be the same as ^^^.
