@@ -29,7 +29,7 @@ CalenPlan is a web-based calendar application that allows users to create, manag
 ### Setup Instructions
 1. **Clone the Repository**
    ```sh
-   git clone https://github.com/your-username/CalenPlan.git
+   git clone https://github.com/xachuen/CalenPlan.git
    cd CalenPlan
    ```
 
